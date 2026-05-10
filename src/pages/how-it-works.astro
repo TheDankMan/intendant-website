@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+---
+
+<BaseLayout
+  title="How Intendant works — Procurement from catalogue to invoice"
+  description="A step-by-step look at how Intendant handles your procurement workflow — from supplier setup to delivery confirmation and invoice matching."
+>
+
+  <!-- Hero -->
+  <section class="bg-navy py-16 sm:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <p class="font-display font-semibold uppercase text-xs tracking-widest text-brass mb-4">How it works</p>
+      <h1 class="font-display font-bold text-4xl sm:text-5xl text-white uppercase tracking-wide leading-none mb-5">
+        From catalogue to invoice.<br class="hidden sm:block" /> Every step in one place.
+      </h1>
+      <p class="font-body text-lg text-white/70 leading-relaxed">
+        Intendant handles the full procurement loop — ordering, delivery, and reconciliation — so your team spends time on the work, not the admin.
+      </p>
+    </div>
+  </section>
+
+  <!-- Steps -->
+  <section class="bg-surface py-16 sm:py-24">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6">
+      <ol class="space-y-16">
+
+        <li class="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-4 sm:gap-8">
+          <div class="text-center sm:text-right">
+            <span class="font-display font-bold text-5xl text-brass/30 leading-none">01</span>
+          </div>
+          <div class="border-l-2 border-brass/20 pl-6 sm:pl-8 pb-2">
+            <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Set up your suppliers and catalogue</h2>
+            <p class="font-body text-base text-muted leading-relaxed mb-4">
+              Start by adding your suppliers and importing your catalogue items. Each item is linked to one or more suppliers, with agreed unit prices and quantity bands.
+              If you have existing price books, they import from a spreadsheet in minutes.
+            </p>
+            <p class="font-body text-base text-muted leading-relaxed">
+              You define the catalogue — Intendant keeps it consistent. Staff always see current items at current prices, regardless of which supplier holds that contract.
+            </p>
+          </div>
+        </li>
+
+        <li class="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-4 sm:gap-8">
+          <div class="text-center sm:text-right">
+            <span class="font-display font-bold text-5xl text-brass/30 leading-none">02</span>
+          </div>
+          <div class="border-l-2 border-brass/20 pl-6 sm:pl-8 pb-2">
+            <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Staff place orders against job codes</h2>
+            <p class="font-body text-base text-muted leading-relaxed mb-4">
+              Team members log in, browse the catalogue, and add what they need to a basket. Before submitting, they tag the order to a job or project code.
+            </p>
+            <p class="font-body text-base text-muted leading-relaxed">
+              No phone calls. No emails to the wrong address. No guessing which supplier to contact. The right supplier for each item is determined by the catalogue, not by the person placing the order.
+            </p>
+          </div>
+        </li>
+
+        <li class="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-4 sm:gap-8">
+          <div class="text-center sm:text-right">
+            <span class="font-display font-bold text-5xl text-brass/30 leading-none">03</span>
+          </div>
+          <div class="border-l-2 border-brass/20 pl-6 sm:pl-8 pb-2">
+            <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Orders route to suppliers as structured POs</h2>
+            <p class="font-body text-base text-muted leading-relaxed mb-4">
+              When an order is placed, Intendant splits it by supplier and generates a purchase order for each. Suppliers receive a clear, structured PO — not a chain of emails.
+            </p>
+            <p class="font-body text-base text-muted leading-relaxed">
+              Your buyers see every open order, filtered by supplier, job, or date. Approvals can be required before POs go out — or orders can flow straight through for trusted staff.
+            </p>
+          </div>
+        </li>
+
+        <li class="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-4 sm:gap-8">
+          <div class="text-center sm:text-right">
+            <span class="font-display font-bold text-5xl text-brass/30 leading-none">04</span>
+          </div>
+          <div class="border-l-2 border-brass/20 pl-6 sm:pl-8 pb-2">
+            <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Deliveries confirmed with proof of delivery</h2>
+            <p class="font-body text-base text-muted leading-relaxed mb-4">
+              When a delivery arrives, the driver or site contact uploads a proof-of-delivery photo from their phone. The delivery is timestamped and linked to the original order automatically.
+            </p>
+            <p class="font-body text-base text-muted leading-relaxed">
+              No more paper delivery notes that go missing. No more disputes about whether something arrived. Every delivery has a record.
+            </p>
+          </div>
+        </li>
+
+        <li class="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-4 sm:gap-8">
+          <div class="text-center sm:text-right">
+            <span class="font-display font-bold text-5xl text-brass/30 leading-none">05</span>
+          </div>
+          <div class="border-l-2 border-brass/20 pl-6 sm:pl-8 pb-2">
+            <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Invoices matched against purchase orders</h2>
+            <p class="font-body text-base text-muted leading-relaxed mb-4">
+              When a supplier invoice arrives, your accounts team matches it against the relevant PO in Intendant. Line-level discrepancies are flagged immediately — before they reach the ledger.
+            </p>
+            <p class="font-body text-base text-muted leading-relaxed">
+              Spend reports by supplier, by job, and by period are available at any time. No waiting for month-end to understand where the budget has gone.
+            </p>
+          </div>
+        </li>
+
+      </ol>
+    </div>
+  </section>
+
+  <!-- Roles -->
+  <section class="bg-surface-2 py-16 sm:py-20">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6">
+      <div class="text-center mb-10">
+        <p class="font-display font-semibold uppercase text-xs tracking-widest text-slate mb-3">Role-based access</p>
+        <h2 class="font-display font-bold text-3xl sm:text-4xl text-navy uppercase tracking-wide">
+          Everyone sees what they need.<br class="hidden sm:block" /> Nothing they don't.
+        </h2>
+      </div>
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+        {[
+          {
+            role: 'Members',
+            desc: 'Browse the catalogue and place orders against their assigned jobs. Can view their own order history and delivery status.',
+          },
+          {
+            role: 'Buyers / Admins',
+            desc: 'Full order visibility across all jobs. Manage suppliers, catalogue items, price books, and user access.',
+          },
+          {
+            role: 'Accounts',
+            desc: 'Access delivery notes, invoice matching, and spend reporting. No access to order placement or catalogue management.',
+          },
+        ].map((r) => (
+          <div class="bg-white rounded-xl p-6 border border-slate/10">
+            <h3 class="font-display font-bold text-lg text-navy uppercase tracking-wide mb-2">{r.role}</h3>
+            <p class="font-body text-sm text-muted leading-relaxed">{r.desc}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <ContactCTA
+    heading="Ready to see it with your suppliers?"
+    sub="Get in touch and we'll walk you through how Intendant fits your specific procurement setup."
+  />
+
+</BaseLayout>

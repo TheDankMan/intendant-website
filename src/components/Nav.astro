@@ -1,0 +1,112 @@
+---
+interface Props {
+  currentPath: string;
+}
+const { currentPath } = Astro.props;
+
+const navItems = [
+  { name: 'How it works', href: '/how-it-works' },
+  { name: 'Pricing',      href: '/pricing' },
+  { name: 'Contact',      href: '/contact' },
+];
+---
+
+<header class="sticky top-0 z-40 bg-white border-b border-slate/10 shadow-sm">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+
+    <!-- Wordmark -->
+    <a href="/" class="flex items-center gap-2 group" aria-label="Intendant home">
+      <span class="font-display font-bold text-2xl tracking-widest text-navy uppercase leading-none">
+        Intendant
+      </span>
+      <span class="w-1.5 h-1.5 rounded-full bg-brass mt-0.5"></span>
+    </a>
+
+    <!-- Desktop nav -->
+    <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
+      {navItems.map((item) => {
+        const isActive = currentPath === item.href;
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              'font-display font-semibold uppercase text-sm tracking-[0.06em] transition-colors duration-200',
+              isActive ? 'text-brass' : 'text-navy/70 hover:text-navy',
+            ]}
+          >
+            {item.name}
+          </a>
+        );
+      })}
+      <a
+        href="/contact"
+        class="ml-2 px-4 py-2 bg-navy text-white font-display font-semibold uppercase text-sm tracking-[0.06em] rounded hover:bg-navy-mid transition-colors duration-200"
+      >
+        Get in touch
+      </a>
+    </nav>
+
+    <!-- Mobile menu button -->
+    <button
+      id="mobile-menu-btn"
+      aria-label="Open menu"
+      aria-expanded="false"
+      class="md:hidden flex flex-col gap-1.5 w-8 h-8 items-center justify-center"
+    >
+      <span class="block w-5 h-0.5 bg-navy transition-all duration-200" id="bar1"></span>
+      <span class="block w-5 h-0.5 bg-navy transition-all duration-200" id="bar2"></span>
+      <span class="block w-5 h-0.5 bg-navy transition-all duration-200" id="bar3"></span>
+    </button>
+  </div>
+
+  <!-- Mobile menu -->
+  <div
+    id="mobile-menu"
+    class="md:hidden hidden border-t border-slate/10 bg-white"
+  >
+    <nav class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
+      {navItems.map((item) => {
+        const isActive = currentPath === item.href;
+        return (
+          <a
+            href={item.href}
+            class:list={[
+              'block px-3 py-3 font-display font-semibold uppercase text-sm tracking-[0.06em] rounded transition-colors duration-200',
+              isActive ? 'text-brass bg-navy/5' : 'text-navy/70 hover:text-navy hover:bg-navy/5',
+            ]}
+          >
+            {item.name}
+          </a>
+        );
+      })}
+      <a
+        href="/contact"
+        class="mt-2 px-4 py-3 bg-navy text-white font-display font-semibold uppercase text-sm tracking-[0.06em] rounded text-center"
+      >
+        Get in touch
+      </a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const btn = document.getElementById('mobile-menu-btn');
+  const menu = document.getElementById('mobile-menu');
+  const bar1 = document.getElementById('bar1');
+  const bar2 = document.getElementById('bar2');
+  const bar3 = document.getElementById('bar3');
+
+  btn?.addEventListener('click', () => {
+    const isOpen = menu?.classList.toggle('hidden') === false;
+    btn.setAttribute('aria-expanded', String(isOpen));
+    if (isOpen) {
+      bar1?.classList.add('rotate-45', 'translate-y-2');
+      bar2?.classList.add('opacity-0');
+      bar3?.classList.add('-rotate-45', '-translate-y-2');
+    } else {
+      bar1?.classList.remove('rotate-45', 'translate-y-2');
+      bar2?.classList.remove('opacity-0');
+      bar3?.classList.remove('-rotate-45', '-translate-y-2');
+    }
+  });
+</script>

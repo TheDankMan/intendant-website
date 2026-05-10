@@ -1,0 +1,193 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Contact — Intendant"
+  description="Get in touch with the Intendant team. We'll show you how the portal fits your procurement workflow and give you a same-day quote."
+>
+
+  <!-- Hero -->
+  <section class="bg-navy py-16 sm:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <p class="font-display font-semibold uppercase text-xs tracking-widest text-brass mb-4">Get in touch</p>
+      <h1 class="font-display font-bold text-4xl sm:text-5xl text-white uppercase tracking-wide leading-none mb-5">
+        Let's talk about<br class="hidden sm:block" /> your procurement
+      </h1>
+      <p class="font-body text-lg text-white/70 leading-relaxed">
+        Tell us a bit about your operation and we'll come back the same day with a walkthrough and a quote.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contact form -->
+  <section class="bg-surface py-16 sm:py-20">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6">
+
+      <form id="contact-form" class="space-y-5" novalidate>
+        <!-- Honeypot — hidden from humans, filled by bots -->
+        <input type="text" name="website" class="hidden" tabindex="-1" autocomplete="off" />
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label for="name" class="block font-display font-semibold uppercase text-xs tracking-widest text-navy mb-1.5">
+              Your name <span class="text-brass">*</span>
+            </label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              required
+              autocomplete="name"
+              class="w-full px-4 py-3 rounded-lg border border-slate/20 bg-surface-2 font-body text-sm text-body-text placeholder-muted/50 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy/40 transition-colors"
+              placeholder="Jane Smith"
+            />
+          </div>
+          <div>
+            <label for="company" class="block font-display font-semibold uppercase text-xs tracking-widest text-navy mb-1.5">
+              Company <span class="text-brass">*</span>
+            </label>
+            <input
+              type="text"
+              id="company"
+              name="company"
+              required
+              autocomplete="organization"
+              class="w-full px-4 py-3 rounded-lg border border-slate/20 bg-surface-2 font-body text-sm text-body-text placeholder-muted/50 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy/40 transition-colors"
+              placeholder="Acme Ltd"
+            />
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <div>
+            <label for="email" class="block font-display font-semibold uppercase text-xs tracking-widest text-navy mb-1.5">
+              Email <span class="text-brass">*</span>
+            </label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              required
+              autocomplete="email"
+              class="w-full px-4 py-3 rounded-lg border border-slate/20 bg-surface-2 font-body text-sm text-body-text placeholder-muted/50 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy/40 transition-colors"
+              placeholder="jane@acme.co.uk"
+            />
+          </div>
+          <div>
+            <label for="phone" class="block font-display font-semibold uppercase text-xs tracking-widest text-navy mb-1.5">
+              Phone <span class="text-muted text-xs normal-case font-normal tracking-normal">(optional)</span>
+            </label>
+            <input
+              type="tel"
+              id="phone"
+              name="phone"
+              autocomplete="tel"
+              class="w-full px-4 py-3 rounded-lg border border-slate/20 bg-surface-2 font-body text-sm text-body-text placeholder-muted/50 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy/40 transition-colors"
+              placeholder="+44 20 1234 5678"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label for="message" class="block font-display font-semibold uppercase text-xs tracking-widest text-navy mb-1.5">
+            Tell us about your setup <span class="text-brass">*</span>
+          </label>
+          <textarea
+            id="message"
+            name="message"
+            required
+            rows="5"
+            class="w-full px-4 py-3 rounded-lg border border-slate/20 bg-surface-2 font-body text-sm text-body-text placeholder-muted/50 focus:outline-none focus:ring-2 focus:ring-navy/30 focus:border-navy/40 transition-colors resize-none"
+            placeholder="How many suppliers do you work with? What does your team look like? What's causing you the most pain right now?"
+          ></textarea>
+        </div>
+
+        <!-- Error message -->
+        <div id="form-error" class="hidden rounded-lg bg-red-50 border border-red-200 px-4 py-3">
+          <p class="font-body text-sm text-red-700" id="form-error-text">Something went wrong. Please try again or email us directly at info@intendant.uk</p>
+        </div>
+
+        <button
+          type="submit"
+          id="submit-btn"
+          class="w-full sm:w-auto px-8 py-3.5 bg-navy text-white font-display font-bold uppercase text-sm tracking-[0.08em] rounded hover:bg-navy-mid transition-colors duration-200 disabled:opacity-60 disabled:cursor-not-allowed"
+        >
+          <span id="submit-label">Send message</span>
+        </button>
+      </form>
+
+      <!-- Success state -->
+      <div id="form-success" class="hidden text-center py-12">
+        <div class="w-14 h-14 bg-brass/10 rounded-full flex items-center justify-center mx-auto mb-5">
+          <svg class="w-7 h-7 text-brass" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+          </svg>
+        </div>
+        <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Message sent</h2>
+        <p class="font-body text-base text-muted">We'll come back to you the same working day.</p>
+      </div>
+
+      <div class="mt-8 pt-8 border-t border-slate/10">
+        <p class="font-body text-sm text-muted">
+          Prefer to email directly?
+          <a href="mailto:info@intendant.uk" class="text-slate hover:text-navy transition-colors duration-200 underline underline-offset-2">
+            info@intendant.uk
+          </a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null;
+  const successEl = document.getElementById('form-success');
+  const errorEl = document.getElementById('form-error');
+  const errorText = document.getElementById('form-error-text');
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement | null;
+  const submitLabel = document.getElementById('submit-label');
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form || !submitBtn) return;
+
+    // Honeypot check
+    const honeypot = (form.elements.namedItem('website') as HTMLInputElement)?.value;
+    if (honeypot) return;
+
+    submitBtn.disabled = true;
+    if (submitLabel) submitLabel.textContent = 'Sending…';
+    errorEl?.classList.add('hidden');
+
+    const data = {
+      name:    (form.elements.namedItem('name')    as HTMLInputElement).value.trim(),
+      company: (form.elements.namedItem('company') as HTMLInputElement).value.trim(),
+      email:   (form.elements.namedItem('email')   as HTMLInputElement).value.trim(),
+      phone:   (form.elements.namedItem('phone')   as HTMLInputElement).value.trim(),
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement).value.trim(),
+    };
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json() as { ok?: boolean; error?: string };
+
+      if (res.ok && json.ok) {
+        form.classList.add('hidden');
+        successEl?.classList.remove('hidden');
+      } else {
+        throw new Error(json.error || 'unexpected_error');
+      }
+    } catch {
+      errorEl?.classList.remove('hidden');
+      if (errorText) errorText.textContent = 'Something went wrong. Please try again or email us directly at info@intendant.uk';
+      submitBtn.disabled = false;
+      if (submitLabel) submitLabel.textContent = 'Send message';
+    }
+  });
+</script>

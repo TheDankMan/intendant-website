@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+---
+
+<BaseLayout
+  title="Pricing — Intendant"
+  description="Intendant is priced per organisation, not per seat. Get in touch for a quote tailored to your supplier count and team size."
+>
+
+  <!-- Hero -->
+  <section class="bg-navy py-16 sm:py-20">
+    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
+      <p class="font-display font-semibold uppercase text-xs tracking-widest text-brass mb-4">Pricing</p>
+      <h1 class="font-display font-bold text-4xl sm:text-5xl text-white uppercase tracking-wide leading-none mb-5">
+        Simple pricing.<br class="hidden sm:block" /> No per-seat surprises.
+      </h1>
+      <p class="font-body text-lg text-white/70 leading-relaxed">
+        Intendant is priced per organisation — not per user. Whether your team is five people or fifty, you pay the same flat rate.
+      </p>
+    </div>
+  </section>
+
+  <!-- Pricing detail -->
+  <section class="bg-surface py-16 sm:py-20">
+    <div class="max-w-2xl mx-auto px-4 sm:px-6">
+
+      <div class="bg-surface-2 border border-slate/15 rounded-2xl p-8 sm:p-10 text-center">
+        <p class="font-display font-semibold uppercase text-xs tracking-widest text-slate mb-4">How we price</p>
+        <h2 class="font-display font-bold text-3xl text-navy uppercase tracking-wide mb-6">
+          Scoped to your operation
+        </h2>
+        <p class="font-body text-base text-muted leading-relaxed mb-6">
+          Pricing is based on the number of active suppliers and your order volume — not the number of staff who log in.
+          We scope each quote individually so you're not paying for capacity you don't use.
+        </p>
+        <p class="font-body text-base text-muted leading-relaxed mb-8">
+          There are no setup fees, no per-seat charges, and no limits on how many jobs or catalogue items you can manage.
+        </p>
+        <a
+          href="/contact"
+          class="inline-block px-8 py-3.5 bg-brass text-navy font-display font-bold uppercase text-sm tracking-[0.08em] rounded hover:bg-brass-dark transition-colors duration-200"
+        >
+          Get a quote
+        </a>
+      </div>
+
+      <!-- What's included -->
+      <div class="mt-12">
+        <h2 class="font-display font-bold text-xl text-navy uppercase tracking-wide mb-6 text-center">What's included</h2>
+        <ul class="space-y-3">
+          {[
+            'Unlimited users (members, buyers, accounts, delivery)',
+            'Unlimited jobs and catalogue items',
+            'Supplier price book management and expiry alerts',
+            'Purchase order generation and tracking',
+            'Proof-of-delivery photo uploads',
+            'Invoice matching and discrepancy flagging',
+            'Spend reports by job, supplier, and period',
+            'UK-based support',
+          ].map((item) => (
+            <li class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-brass shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              <span class="font-body text-sm text-body-text">{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+  <ContactCTA
+    heading="Get a quote"
+    sub="Tell us about your suppliers and team size and we'll come back with a number the same day."
+  />
+
+</BaseLayout>

@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@400;500;600;700&family=Inter+Tight:ital,wght@0,400;0,500;0,600;1,400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-navy:       27 46 75;
+  --color-navy-mid:   36 58 94;
+  --color-slate:      61 100 148;
+  --color-brass:      200 169 110;
+  --color-brass-dark: 170 140 85;
+  --color-surface:    255 255 255;
+  --color-surface-2:  247 248 252;
+  --color-body-text:  22 33 52;
+  --color-muted:      100 116 139;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter Tight', 'Inter', system-ui, sans-serif;
+  background-color: rgb(var(--color-surface));
+  color: rgb(var(--color-body-text));
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: 'Barlow Condensed', 'Arial Narrow', Arial, sans-serif;
+}

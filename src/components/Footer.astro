@@ -1,0 +1,59 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer class="bg-navy text-white/70">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 pb-8 border-b border-white/10">
+
+      <!-- Brand -->
+      <div>
+        <div class="flex items-center gap-2 mb-3">
+          <span class="font-display font-bold text-xl tracking-widest text-white uppercase">Intendant</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-brass"></span>
+        </div>
+        <p class="font-body text-sm leading-relaxed text-white/60">
+          Every order. Every supplier. One place.
+        </p>
+      </div>
+
+      <!-- Navigation -->
+      <div>
+        <p class="font-display font-semibold uppercase text-xs tracking-widest text-white/40 mb-4">Navigation</p>
+        <ul class="space-y-2">
+          {[
+            { name: 'How it works', href: '/how-it-works' },
+            { name: 'Pricing',      href: '/pricing' },
+            { name: 'Contact',      href: '/contact' },
+          ].map((item) => (
+            <li>
+              <a href={item.href} class="font-body text-sm text-white/60 hover:text-white transition-colors duration-200">
+                {item.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div>
+        <p class="font-display font-semibold uppercase text-xs tracking-widest text-white/40 mb-4">Contact</p>
+        <a href="mailto:info@intendant.uk" class="font-body text-sm text-white/60 hover:text-white transition-colors duration-200">
+          info@intendant.uk
+        </a>
+        <p class="font-body text-sm text-white/40 mt-3">
+          A product of TVET Training Systems UK Ltd
+        </p>
+      </div>
+    </div>
+
+    <div class="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="font-body text-xs text-white/30">
+        &copy; {year} TVET Training Systems UK Ltd. All rights reserved.
+      </p>
+      <p class="font-body text-xs text-white/30">
+        Intendant&trade; is a registered trademark.
+      </p>
+    </div>
+  </div>
+</footer>
