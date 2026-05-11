@@ -1,147 +1,189 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactCTA from '../components/ContactCTA.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/product/Icon.astro';
+import CatalogueScreen from '../components/product/CatalogueScreen.astro';
+import BasketDrawerMock from '../components/product/BasketDrawerMock.astro';
+import HistoryScreen from '../components/product/HistoryScreen.astro';
+import DeliveryDocketMock from '../components/product/DeliveryDocketMock.astro';
+import InvoiceMatchMock from '../components/product/InvoiceMatchMock.astro';
+
+const rail = [
+  'Set up suppliers & catalogue',
+  'Staff place orders by job',
+  'Orders route as structured POs',
+  'Deliveries arrive, dockets captured',
+  'Invoices match against POs',
+];
+
+const steps = [
+  {
+    n: '01',
+    title: 'Set up suppliers and the catalogue',
+    body: 'We import your existing price lists and supplier records. Each item gets a primary supplier plus optional alternates, with the agreed unit prices and quantity bands attached.',
+    bullets: [
+      'CSV / Excel price-book import',
+      'Per-item supplier mapping with alternates',
+      'Quantity bands, units, and pack sizes',
+      'Contract expiry dates with renewal alerts',
+    ],
+    caption: 'Catalogue editor',
+  },
+  {
+    n: '02',
+    title: 'Staff place orders against job codes',
+    body: 'Team members log in, browse the catalogue, and add items to the basket. Before submission, every order is tagged to a job code — captured once and stamped on every line.',
+    bullets: [
+      'Catalogue search by name, code, supplier, or recent',
+      'Job code captured on submit, not after the fact',
+      'Quantity steppers with gloved-hand tap targets',
+      "'In basket' badges prevent duplicate adds",
+    ],
+    caption: 'Order basket',
+  },
+  {
+    n: '03',
+    title: 'Orders route to suppliers as structured POs',
+    body: "When the order goes out, Intendant splits it by supplier and generates a clean purchase order for each. Suppliers see exactly what's ordered, where it's going, when it's needed.",
+    bullets: [
+      'One PO per supplier, auto-numbered',
+      'Delivery address pulled from the job',
+      'Required-by date captured at order time',
+      'Buyers see all open POs in one view',
+    ],
+    caption: 'Open POs',
+  },
+  {
+    n: '04',
+    title: 'Deliveries arrive — dockets captured on arrival',
+    body: 'The driver or site contact uploads a delivery docket photo from their phone. The system reads quantities off the docket and links them to the originating order.',
+    bullets: [
+      'Photo upload from any phone',
+      'Auto-link to the original order by reference',
+      'Part deliveries tracked at the line level',
+      'Overdue deliveries flagged in red',
+    ],
+    caption: 'Proof of delivery',
+  },
+  {
+    n: '05',
+    title: 'Invoices match against POs',
+    body: 'When the supplier invoice lands, accounts pulls it into Intendant. Lines are matched against PO and docket. Discrepancies surface immediately — quantity mismatches, price drift, ghost items.',
+    bullets: [
+      'Three-way line match: PO ↔ docket ↔ invoice',
+      'Price drift checked against agreed price book',
+      'Flagged invoices held for review, not paid',
+      'Approved matches push to your accounts tool',
+    ],
+    caption: 'Invoice reconciliation',
+  },
+];
+
+const roles = [
+  { tag: 'ROLE 01', title: 'Site managers', desc: 'Place orders against assigned jobs. Track open deliveries.', list: ['Catalogue search', 'Order basket', 'Own order history', 'PoD uploads'] },
+  { tag: 'ROLE 02', title: 'Buyers', desc: 'Full order visibility. Manage suppliers, catalogue, and price books.', list: ['All open POs', 'Catalogue manager', 'Supplier price books', 'User access'] },
+  { tag: 'ROLE 03', title: 'Accounts', desc: 'Match invoices, reconcile deliveries, produce spend reports.', list: ['Invoice match', 'Delivery dockets', 'Spend reports', 'CSV export'] },
+  { tag: 'ROLE 04', title: 'Admins', desc: 'Org-wide settings, integrations, audit logs, retention policies.', list: ['User & role admin', 'Accounting integration', 'Audit log', 'Data retention'] },
+];
 ---
 
-<BaseLayout
-  title="How Intendant works — Procurement from catalogue to invoice"
-  description="A step-by-step look at how Intendant handles your procurement workflow — from supplier setup to delivery confirmation and invoice matching."
->
-
-  <!-- Hero -->
-  <section class="bg-navy py-16 sm:py-20">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-      <p class="font-display font-semibold uppercase text-xs tracking-widest text-brass mb-4">How it works</p>
-      <h1 class="font-display font-bold text-4xl sm:text-5xl text-white uppercase tracking-wide leading-none mb-5">
-        From catalogue to invoice.<br class="hidden sm:block" /> Every step in one place.
-      </h1>
-      <p class="font-body text-lg text-white/70 leading-relaxed">
-        Intendant handles the full procurement loop — ordering, delivery, and reconciliation — so your team spends time on the work, not the admin.
+<BaseLayout title="How it works — Intendant">
+  <section class="page-hero">
+    <div class="container">
+      <div class="eyebrow muted">How it works</div>
+      <h1>Catalogue → Order → Delivery → Match</h1>
+      <p class="lede">
+        The procurement loop, in five steps. Set up takes a week. The daily workflow takes minutes.
       </p>
     </div>
   </section>
 
-  <!-- Steps -->
-  <section class="bg-surface py-16 sm:py-24">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6">
-      <ol class="space-y-16">
+  <section class="section">
+    <div class="container how-grid" style="display:grid; grid-template-columns:minmax(320px, 1fr) 2fr; gap:64px;">
+      <aside style="position:sticky; top:96px; align-self:start;">
+        <div class="eyebrow accent" style="margin-bottom:16px;">The five steps</div>
+        <ol style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:14px;">
+          {rail.map((s, i) => (
+            <li style="display:grid; grid-template-columns:32px 1fr; gap:12px; font-size:15px; align-items:center;">
+              <span style="font-family:var(--font-display); font-weight:700; width:32px; height:32px; border-radius:6px; background:var(--mw-500); color:var(--accent); display:flex; align-items:center; justify-content:center; font-size:14px; letter-spacing:0.05em;">0{i + 1}</span>
+              <span style="color:var(--text-primary);">{s}</span>
+            </li>
+          ))}
+        </ol>
+        <div style="margin-top:32px; padding:20px; background:var(--mw-500); color:#fff; border-radius:12px;">
+          <div class="eyebrow" style="color:var(--accent);">Typical setup time</div>
+          <div style="font-family:var(--font-display); font-weight:700; font-size:40px; line-height:1; margin:10px 0 4px; color:#fff;">5 days</div>
+          <p style="margin:0; font-size:13px; color:rgba(255,255,255,0.72);">From kick-off to first live order. We handle the supplier price-book imports.</p>
+        </div>
+      </aside>
 
-        <li class="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-4 sm:gap-8">
-          <div class="text-center sm:text-right">
-            <span class="font-display font-bold text-5xl text-brass/30 leading-none">01</span>
-          </div>
-          <div class="border-l-2 border-brass/20 pl-6 sm:pl-8 pb-2">
-            <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Set up your suppliers and catalogue</h2>
-            <p class="font-body text-base text-muted leading-relaxed mb-4">
-              Start by adding your suppliers and importing your catalogue items. Each item is linked to one or more suppliers, with agreed unit prices and quantity bands.
-              If you have existing price books, they import from a spreadsheet in minutes.
-            </p>
-            <p class="font-body text-base text-muted leading-relaxed">
-              You define the catalogue — Intendant keeps it consistent. Staff always see current items at current prices, regardless of which supplier holds that contract.
-            </p>
-          </div>
-        </li>
-
-        <li class="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-4 sm:gap-8">
-          <div class="text-center sm:text-right">
-            <span class="font-display font-bold text-5xl text-brass/30 leading-none">02</span>
-          </div>
-          <div class="border-l-2 border-brass/20 pl-6 sm:pl-8 pb-2">
-            <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Staff place orders against job codes</h2>
-            <p class="font-body text-base text-muted leading-relaxed mb-4">
-              Team members log in, browse the catalogue, and add what they need to a basket. Before submitting, they tag the order to a job or project code.
-            </p>
-            <p class="font-body text-base text-muted leading-relaxed">
-              No phone calls. No emails to the wrong address. No guessing which supplier to contact. The right supplier for each item is determined by the catalogue, not by the person placing the order.
-            </p>
-          </div>
-        </li>
-
-        <li class="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-4 sm:gap-8">
-          <div class="text-center sm:text-right">
-            <span class="font-display font-bold text-5xl text-brass/30 leading-none">03</span>
-          </div>
-          <div class="border-l-2 border-brass/20 pl-6 sm:pl-8 pb-2">
-            <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Orders route to suppliers as structured POs</h2>
-            <p class="font-body text-base text-muted leading-relaxed mb-4">
-              When an order is placed, Intendant splits it by supplier and generates a purchase order for each. Suppliers receive a clear, structured PO — not a chain of emails.
-            </p>
-            <p class="font-body text-base text-muted leading-relaxed">
-              Your buyers see every open order, filtered by supplier, job, or date. Approvals can be required before POs go out — or orders can flow straight through for trusted staff.
-            </p>
-          </div>
-        </li>
-
-        <li class="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-4 sm:gap-8">
-          <div class="text-center sm:text-right">
-            <span class="font-display font-bold text-5xl text-brass/30 leading-none">04</span>
-          </div>
-          <div class="border-l-2 border-brass/20 pl-6 sm:pl-8 pb-2">
-            <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Deliveries confirmed with proof of delivery</h2>
-            <p class="font-body text-base text-muted leading-relaxed mb-4">
-              When a delivery arrives, the driver or site contact uploads a proof-of-delivery photo from their phone. The delivery is timestamped and linked to the original order automatically.
-            </p>
-            <p class="font-body text-base text-muted leading-relaxed">
-              No more paper delivery notes that go missing. No more disputes about whether something arrived. Every delivery has a record.
-            </p>
-          </div>
-        </li>
-
-        <li class="grid grid-cols-1 sm:grid-cols-[80px_1fr] gap-4 sm:gap-8">
-          <div class="text-center sm:text-right">
-            <span class="font-display font-bold text-5xl text-brass/30 leading-none">05</span>
-          </div>
-          <div class="border-l-2 border-brass/20 pl-6 sm:pl-8 pb-2">
-            <h2 class="font-display font-bold text-2xl text-navy uppercase tracking-wide mb-3">Invoices matched against purchase orders</h2>
-            <p class="font-body text-base text-muted leading-relaxed mb-4">
-              When a supplier invoice arrives, your accounts team matches it against the relevant PO in Intendant. Line-level discrepancies are flagged immediately — before they reach the ledger.
-            </p>
-            <p class="font-body text-base text-muted leading-relaxed">
-              Spend reports by supplier, by job, and by period are available at any time. No waiting for month-end to understand where the budget has gone.
-            </p>
-          </div>
-        </li>
-
-      </ol>
-    </div>
-  </section>
-
-  <!-- Roles -->
-  <section class="bg-surface-2 py-16 sm:py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-10">
-        <p class="font-display font-semibold uppercase text-xs tracking-widest text-slate mb-3">Role-based access</p>
-        <h2 class="font-display font-bold text-3xl sm:text-4xl text-navy uppercase tracking-wide">
-          Everyone sees what they need.<br class="hidden sm:block" /> Nothing they don't.
-        </h2>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {[
-          {
-            role: 'Members',
-            desc: 'Browse the catalogue and place orders against their assigned jobs. Can view their own order history and delivery status.',
-          },
-          {
-            role: 'Buyers / Admins',
-            desc: 'Full order visibility across all jobs. Manage suppliers, catalogue items, price books, and user access.',
-          },
-          {
-            role: 'Accounts',
-            desc: 'Access delivery notes, invoice matching, and spend reporting. No access to order placement or catalogue management.',
-          },
-        ].map((r) => (
-          <div class="bg-white rounded-xl p-6 border border-slate/10">
-            <h3 class="font-display font-bold text-lg text-navy uppercase tracking-wide mb-2">{r.role}</h3>
-            <p class="font-body text-sm text-muted leading-relaxed">{r.desc}</p>
+      <div class="step-rail">
+        {steps.map((s, i) => (
+          <div class="step-item">
+            <div class="meta">STEP {s.n}</div>
+            <h3>{s.title}</h3>
+            <p>{s.body}</p>
+            <ul style="list-style:none; padding:0; margin:14px 0 22px; display:grid; grid-template-columns:1fr 1fr; gap:8px;">
+              {s.bullets.map((b) => (
+                <li style="display:grid; grid-template-columns:16px 1fr; gap:8px; font-size:13px; color:var(--text-primary);">
+                  <Icon name="check" size={14} color="var(--accent)" strokeWidth={2.5} />
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+            <div class="shot">
+              <div class="inner">
+                {i === 0 && <CatalogueScreen />}
+                {i === 1 && (
+                  <div style="background:var(--canvas); height:440px; padding:16px;">
+                    <div style="height:100%; max-width:360px; margin-left:auto; background:#fff; border:1px solid var(--border); border-radius:8px; overflow:hidden;">
+                      <BasketDrawerMock />
+                    </div>
+                  </div>
+                )}
+                {i === 2 && <HistoryScreen />}
+                {i === 3 && (
+                  <div style="background:var(--canvas); height:440px; padding:24px; display:flex; align-items:center;">
+                    <DeliveryDocketMock />
+                  </div>
+                )}
+                {i === 4 && (
+                  <div style="background:var(--canvas); height:440px; padding:24px; display:flex; align-items:center;">
+                    <InvoiceMatchMock />
+                  </div>
+                )}
+              </div>
+            </div>
+            <div class="shot-caption"><span class="mono">{s.caption}</span></div>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <ContactCTA
-    heading="Ready to see it with your suppliers?"
-    sub="Get in touch and we'll walk you through how Intendant fits your specific procurement setup."
-  />
+  <section class="section section-canvas">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">Role-based access</span>
+        <h2>Everyone sees what they need. Nothing they don't.</h2>
+      </div>
+      <div class="roles">
+        {roles.map((r) => (
+          <div class="role">
+            <div class="role-tag">{r.tag}</div>
+            <h4>{r.title}</h4>
+            <p>{r.desc}</p>
+            <ul class="role-list">
+              {r.list.map((s) => <li>{s}</li>)}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
 
+  <CtaBand
+    heading="Want to see your workflow in it?"
+    sub="Send us your current process — phone, email, spreadsheet — and we'll show you the same thing in Intendant."
+  />
 </BaseLayout>

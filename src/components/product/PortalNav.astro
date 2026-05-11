@@ -1,0 +1,53 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  section?: string;
+  job?: string;
+  basketCount?: number;
+  user?: string;
+}
+const {
+  section = 'catalogue',
+  job = 'J-204 — Northfield Yard',
+  basketCount = 3,
+  user = 'James B.',
+} = Astro.props;
+
+const links = [
+  { id: 'catalogue', label: 'Catalogue' },
+  { id: 'history',   label: 'History' },
+  { id: 'reports',   label: 'Reports' },
+  { id: 'accounts',  label: 'Accounts' },
+  { id: 'settings',  label: 'Settings' },
+];
+
+const initials = user.split(' ').map((s) => s[0]).join('');
+---
+
+<header class="pf-nav">
+  <div class="brand">
+    <span style="line-height:1;">HARTWELL</span>
+    <span class="sep"></span>
+    <span class="sub" style="line-height:1;">Order Portal</span>
+  </div>
+  <div class="job">
+    <Icon name="clipboard" size={14} />
+    {job}
+    <Icon name="chevD" size={12} />
+  </div>
+  <nav class="pf-links">
+    {links.map((l) => (
+      <button class={section === l.id ? 'active' : ''} type="button">{l.label}</button>
+    ))}
+  </nav>
+  <button class="pf-basket" type="button">
+    <Icon name="basket" size={16} />
+    Basket
+    {basketCount > 0 && <span class="count">{basketCount}</span>}
+  </button>
+  <div class="pf-user">
+    <span style="white-space:nowrap;">{user}</span>
+    <div class="avatar">{initials}</div>
+  </div>
+</header>

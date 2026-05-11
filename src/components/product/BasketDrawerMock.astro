@@ -1,0 +1,40 @@
+---
+import Icon from './Icon.astro';
+
+const items = [
+  { title: 'Expanding Foam Can with Nozzle', supplier: 'Brackman Hardware', unit: 'Each', price: 3.75, qty: 6 },
+  { title: 'Foam Gun Applicator (Steel)',    supplier: 'Trent Supplies',    unit: 'Each', price: 17.46, qty: 24 },
+  { title: 'Foam Gun Cleaner 500ml',         supplier: 'Trent Supplies',    unit: 'Each', price: 3.07, qty: 3 },
+];
+const total = items.reduce((s, i) => s + i.price * i.qty, 0);
+---
+
+<div class="basket-mock">
+  <div class="bh">
+    <Icon name="basket" size={16} color="var(--mw-500)" />
+    <h2>Order Basket</h2>
+    <span class="meta">{items.length} items · 2 suppliers</span>
+  </div>
+  <div class="blist">
+    {items.map((it) => (
+      <div class="brow">
+        <div class="info">
+          <div class="t">{it.title}</div>
+          <div class="m">{it.supplier} · £{it.price.toFixed(2)}/{it.unit}</div>
+        </div>
+        <div class="stepper in-basket">
+          <button type="button">−</button>
+          <span class="v">{it.qty}</span>
+          <button type="button">+</button>
+        </div>
+        <div class="sub">£{(it.price * it.qty).toFixed(2)}</div>
+      </div>
+    ))}
+  </div>
+  <div class="bf">
+    <div class="row"><span>Total</span><span>£{total.toFixed(2)}</span></div>
+    <button class="btn btn-secondary" type="button" style="width:100%;">
+      <Icon name="check" size={14} /> Review Order
+    </button>
+  </div>
+</div>

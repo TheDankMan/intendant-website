@@ -1,0 +1,55 @@
+---
+import Icon from './Icon.astro';
+import PortalNav from './PortalNav.astro';
+
+interface Props {
+  height?: number;
+}
+const { height = 480 } = Astro.props;
+
+const ORDERS = [
+  { ref: 'ORD-J204-018', status: 'open',     submitted: '22 Mar 2026', by: 'James B.',    required: '24 Mar' },
+  { ref: 'PO-015',       status: 'part',     submitted: '18 Mar 2026', by: 'S. Patel',    required: '20 Mar', received: '12 / 24 received' },
+  { ref: 'ORD-J204-012', status: 'complete', submitted: '11 Mar 2026', by: 'James B.',    required: '13 Mar', total: '1,842.40' },
+  { ref: 'ORD-J187-007', status: 'overdue',  submitted: '08 Mar 2026', by: "M. O'Connor", required: '15 Mar' },
+];
+const LABELS: Record<string, string> = {
+  open: 'OPEN',
+  part: 'PART DELIVERED',
+  complete: 'COMPLETE',
+  overdue: 'OVERDUE',
+};
+---
+
+<div class="pf history" style={`height:${height}px;`}>
+  <PortalNav section="history" job="J-204 Northfield" basketCount={3} user="James B." />
+  <div class="pf-toolbar">
+    <span class="title">Recent orders</span>
+    <span class="meta">· Last 30 days</span>
+    <div style="margin-left:auto; display:flex; gap:4px;">
+      <span class="sbadge open">OPEN</span>
+      <span class="sbadge part">PART DELIVERED</span>
+      <span class="sbadge overdue"><Icon name="warn" size={10} /> OVERDUE</span>
+    </div>
+  </div>
+  <div style="flex:1; overflow:hidden; padding:12px; display:flex; flex-direction:column; gap:8px;">
+    {ORDERS.map((o) => (
+      <div class={`order-card ${o.status}`}>
+        <div style="flex:1; min-width:0;">
+          <div class="head">
+            <span class="ref">{o.ref}</span>
+            <span class={`sbadge ${o.status}`}>{o.status === 'overdue' && <Icon name="warn" size={10} />}{LABELS[o.status]}</span>
+            <span class="sub">Submitted {o.submitted}</span>
+          </div>
+          <div class="body">
+            <span class="it"><Icon name="user" size={12} /> {o.by}</span>
+            <span class="it"><Icon name="cal" size={12} /> Required: {o.required}</span>
+            {o.received && <span class={o.status === 'part' ? 'amber' : 'green'}>{o.received}</span>}
+            {o.total && <span class={o.status === 'complete' ? 'green' : ''}>£{o.total}</span>}
+          </div>
+        </div>
+        <span class="chev"><Icon name="chevR" size={18} /></span>
+      </div>
+    ))}
+  </div>
+</div>

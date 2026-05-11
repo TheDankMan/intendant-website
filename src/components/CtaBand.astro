@@ -1,0 +1,31 @@
+---
+interface Props {
+  heading: string;
+  sub: string;
+  primaryHref?: string;
+  primaryLabel?: string;
+  secondaryHref?: string;
+  secondaryLabel?: string;
+}
+const {
+  heading,
+  sub,
+  primaryHref = '/contact',
+  primaryLabel = 'Book a walkthrough',
+  secondaryHref = '/pricing',
+  secondaryLabel = 'See pricing',
+} = Astro.props;
+---
+
+<section class="cta-band">
+  <div class="container cta-inner">
+    <div>
+      <h2>{heading}</h2>
+      <p>{sub}</p>
+    </div>
+    <div class="cta-actions">
+      <a class="btn btn-primary" href={primaryHref}>{primaryLabel}</a>
+      <a class="btn btn-ghost" href={secondaryHref}>{secondaryLabel}</a>
+    </div>
+  </div>
+</section>

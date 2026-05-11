@@ -1,0 +1,68 @@
+---
+import Icon from './Icon.astro';
+import PortalNav from './PortalNav.astro';
+
+interface Props {
+  height?: number;
+}
+const { height = 480 } = Astro.props;
+
+const lines = [
+  { code: 'STL-203-203-46', title: 'Steel UC 203 × 203 × 46kg/m', qty: 8,  unit: 'length' },
+  { code: 'RBF-T16-12M',    title: 'Rebar T16 × 12m bundle',       qty: 24, unit: 'bundle' },
+  { code: 'CON-C32-RMX',    title: 'C32 ready-mix concrete',       qty: 18, unit: 'm³' },
+];
+const quotes = [
+  { supplier: 'Travis Perkins', total: 14820, lead: '5 days', state: 'received', best: false },
+  { supplier: 'Jewson',         total: 14250, lead: '4 days', state: 'received', best: true  },
+  { supplier: 'MGM Timber',     total: null,  lead: '—',      state: 'pending',  best: false },
+];
+---
+
+<div class="pf accounts" style={`height:${height}px;`}>
+  <PortalNav section="accounts" job="J-187 Westgate" basketCount={0} user="James B." />
+  <div class="pf-toolbar">
+    <span class="ref">RFQ-J187-008</span>
+    <span class="ibadge warning">RFQ MODE</span>
+    <span class="meta">Issued 22 Mar · awaiting 1 of 3</span>
+    <button class="p-btn theme" style="margin-left:auto;" type="button">
+      <Icon name="check" size={12} /> Award to Jewson
+    </button>
+  </div>
+  <div style="flex:1; padding:12px; display:grid; grid-template-columns:1fr 1.1fr; gap:10px; overflow:hidden;">
+    <div class="p-card">
+      <div class="h">Items requested · {lines.length}</div>
+      {lines.map((l) => (
+        <div style="padding:8px 10px; background:var(--surface-sunken); border-radius:6px; display:flex; align-items:center; gap:8px;">
+          <div style="flex:1; min-width:0;">
+            <div style="font-size:12px; font-weight:600;">{l.title}</div>
+            <div style="font-size:10px; color:var(--text-secondary); font-family:var(--font-mono);">{l.code}</div>
+          </div>
+          <div style="font-size:12px; font-weight:600; font-family:var(--font-mono);">{l.qty}</div>
+          <div style="font-size:10px; color:var(--text-muted); min-width:36px;">{l.unit}</div>
+        </div>
+      ))}
+    </div>
+    <div class="p-card">
+      <div class="h">Supplier responses · 2 of 3</div>
+      {quotes.map((q) => (
+        <div style={`padding:10px 12px; border-radius:8px; border:${q.best ? '2px solid #4ADE80' : '1px solid var(--border)'}; background:${q.best ? '#F0FDF4' : '#fff'}; display:flex; align-items:center; gap:10px;`}>
+          <div style="flex:1; min-width:0;">
+            <div style={`font-size:13px; font-weight:700; color:${q.best ? '#15803D' : 'var(--text-primary)'};`}>
+              {q.supplier} {q.best && <span class="ibadge success">BEST</span>}
+            </div>
+            <div style="font-size:10px; color:var(--text-secondary); margin-top:2px;">Lead time: {q.lead}</div>
+          </div>
+          {q.total ? (
+            <div style="text-align:right;">
+              <div style={`font-size:14px; font-weight:700; font-family:var(--font-mono); color:${q.best ? '#15803D' : 'var(--text-primary)'};`}>£{q.total.toLocaleString()}</div>
+              <div style="font-size:9px; color:var(--text-muted);">incl. VAT</div>
+            </div>
+          ) : (
+            <span class="ibadge neutral">PENDING</span>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</div>

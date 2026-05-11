@@ -4,109 +4,58 @@ interface Props {
 }
 const { currentPath } = Astro.props;
 
-const navItems = [
-  { name: 'How it works', href: '/how-it-works' },
-  { name: 'Pricing',      href: '/pricing' },
-  { name: 'Contact',      href: '/contact' },
+const links = [
+  { id: 'how', label: 'How it works', href: '/how-it-works' },
+  { id: 'pricing', label: 'Pricing', href: '/pricing' },
+  { id: 'contact', label: 'Contact', href: '/contact' },
 ];
+
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
 ---
 
-<header class="sticky top-0 z-40 bg-white border-b border-slate/10 shadow-sm">
-  <div class="max-w-6xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16">
+<header class="site-nav" id="site-nav">
+  <div class="site-nav-inner">
+    <a class="wordmark" href="/" aria-label="Intendant home">Intendant</a>
 
-    <!-- Wordmark -->
-    <a href="/" class="flex items-center gap-2 group" aria-label="Intendant home">
-      <span class="font-display font-bold text-2xl tracking-widest text-navy uppercase leading-none">
-        Intendant
-      </span>
-      <span class="w-1.5 h-1.5 rounded-full bg-brass mt-0.5"></span>
-    </a>
-
-    <!-- Desktop nav -->
-    <nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
-      {navItems.map((item) => {
-        const isActive = currentPath === item.href;
-        return (
-          <a
-            href={item.href}
-            class:list={[
-              'font-display font-semibold uppercase text-sm tracking-[0.06em] transition-colors duration-200',
-              isActive ? 'text-brass' : 'text-navy/70 hover:text-navy',
-            ]}
-          >
-            {item.name}
-          </a>
-        );
-      })}
-      <a
-        href="/contact"
-        class="ml-2 px-4 py-2 bg-navy text-white font-display font-semibold uppercase text-sm tracking-[0.06em] rounded hover:bg-navy-mid transition-colors duration-200"
-      >
-        Get in touch
-      </a>
+    <nav class="nav-links" aria-label="Main">
+      {links.map((l) => (
+        <a href={l.href} class={isActive(l.href) ? 'active' : ''}>{l.label}</a>
+      ))}
+      <a href="/contact" class="btn btn-primary nav-cta">Book a walkthrough</a>
     </nav>
 
-    <!-- Mobile menu button -->
-    <button
-      id="mobile-menu-btn"
-      aria-label="Open menu"
-      aria-expanded="false"
-      class="md:hidden flex flex-col gap-1.5 w-8 h-8 items-center justify-center"
-    >
-      <span class="block w-5 h-0.5 bg-navy transition-all duration-200" id="bar1"></span>
-      <span class="block w-5 h-0.5 bg-navy transition-all duration-200" id="bar2"></span>
-      <span class="block w-5 h-0.5 bg-navy transition-all duration-200" id="bar3"></span>
+    <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
     </button>
   </div>
 
-  <!-- Mobile menu -->
-  <div
-    id="mobile-menu"
-    class="md:hidden hidden border-t border-slate/10 bg-white"
-  >
-    <nav class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-1">
-      {navItems.map((item) => {
-        const isActive = currentPath === item.href;
-        return (
-          <a
-            href={item.href}
-            class:list={[
-              'block px-3 py-3 font-display font-semibold uppercase text-sm tracking-[0.06em] rounded transition-colors duration-200',
-              isActive ? 'text-brass bg-navy/5' : 'text-navy/70 hover:text-navy hover:bg-navy/5',
-            ]}
-          >
-            {item.name}
-          </a>
-        );
-      })}
-      <a
-        href="/contact"
-        class="mt-2 px-4 py-3 bg-navy text-white font-display font-semibold uppercase text-sm tracking-[0.06em] rounded text-center"
-      >
-        Get in touch
-      </a>
+  <div class="mobile-menu" id="mobile-menu">
+    <nav aria-label="Mobile">
+      {links.map((l) => (
+        <a href={l.href} class={isActive(l.href) ? 'active' : ''}>{l.label}</a>
+      ))}
+      <a href="/contact" class="btn btn-primary">Book a walkthrough</a>
     </nav>
   </div>
 </header>
 
 <script>
-  const btn = document.getElementById('mobile-menu-btn');
-  const menu = document.getElementById('mobile-menu');
-  const bar1 = document.getElementById('bar1');
-  const bar2 = document.getElementById('bar2');
-  const bar3 = document.getElementById('bar3');
+  const nav = document.getElementById('site-nav');
+  const onScroll = () => {
+    if (!nav) return;
+    if (window.scrollY > 20) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
 
-  btn?.addEventListener('click', () => {
-    const isOpen = menu?.classList.toggle('hidden') === false;
-    btn.setAttribute('aria-expanded', String(isOpen));
-    if (isOpen) {
-      bar1?.classList.add('rotate-45', 'translate-y-2');
-      bar2?.classList.add('opacity-0');
-      bar3?.classList.add('-rotate-45', '-translate-y-2');
-    } else {
-      bar1?.classList.remove('rotate-45', 'translate-y-2');
-      bar2?.classList.remove('opacity-0');
-      bar3?.classList.remove('-rotate-45', '-translate-y-2');
-    }
+  const burger = document.getElementById('nav-burger');
+  const menu = document.getElementById('mobile-menu');
+  burger?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('open');
+    burger.setAttribute('aria-expanded', String(!!open));
   });
 </script>

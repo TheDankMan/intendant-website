@@ -1,80 +1,123 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactCTA from '../components/ContactCTA.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/product/Icon.astro';
+
+const facts = [
+  { label: 'Suppliers', val: 'Quoted on count' },
+  { label: 'Users', val: 'Unlimited' },
+  { label: 'Jobs', val: 'Unlimited' },
+  { label: 'Setup fees', val: 'None' },
+];
+
+const includes = [
+  'Unlimited users across all roles',
+  'Unlimited catalogue items and jobs',
+  'Supplier price book imports & alerts',
+  'PO generation and chase workflows',
+  'Proof-of-delivery photo capture',
+  'Three-way invoice match',
+  'Spend reports & CSV export',
+  'Accounting integration (Xero, Sage, QBO)',
+  'UK-based support',
+  'ISO 27001 aligned infrastructure',
+];
+
+const sizes = [
+  { size: 'Small', desc: 'Up to 4 suppliers · &lt;200 orders/mo · 1 site', notes: 'Most builders, fit-out, and small civils firms.' },
+  { size: 'Mid',   desc: '4–10 suppliers · 200–800 orders/mo · multiple sites', notes: 'Multi-site contractors, FM operators, plant hire.' },
+  { size: 'Large', desc: '10+ suppliers · 800+ orders/mo · regional ops', notes: 'Custom scoping; multi-entity rollouts.' },
+];
+
+const faqs = [
+  { q: 'Is there a setup fee?', a: 'No. Onboarding is included — that covers price-book imports, supplier setup, and user training for your buyers and site staff.' },
+  { q: 'What happens if our supplier list grows?', a: "Adding a supplier doesn't necessarily change your tier. Pricing only shifts when sustained order volume or supplier count crosses a band. We'll flag it before it changes." },
+  { q: 'Do you charge per user?', a: 'No. Add as many site staff, buyers, accounts users, and admins as you need. We price the organisation, not the headcount.' },
+  { q: 'Can we trial it first?', a: 'Yes — a one-month paid pilot with a single supplier and a single site is the most common starting point. Pilot fees credit against the full contract.' },
+  { q: 'Where is data hosted?', a: 'UK only. Cloudflare and AWS eu-west-2. Daily encrypted backups; ISO 27001 aligned controls.' },
+  { q: "What's the contract term?", a: "12 months minimum after pilot. Monthly thereafter once you've completed the first year." },
+];
 ---
 
-<BaseLayout
-  title="Pricing — Intendant"
-  description="Intendant is priced per organisation, not per seat. Get in touch for a quote tailored to your supplier count and team size."
->
-
-  <!-- Hero -->
-  <section class="bg-navy py-16 sm:py-20">
-    <div class="max-w-3xl mx-auto px-4 sm:px-6 text-center">
-      <p class="font-display font-semibold uppercase text-xs tracking-widest text-brass mb-4">Pricing</p>
-      <h1 class="font-display font-bold text-4xl sm:text-5xl text-white uppercase tracking-wide leading-none mb-5">
-        Simple pricing.<br class="hidden sm:block" /> No per-seat surprises.
-      </h1>
-      <p class="font-body text-lg text-white/70 leading-relaxed">
-        Intendant is priced per organisation — not per user. Whether your team is five people or fifty, you pay the same flat rate.
+<BaseLayout title="Pricing — Intendant">
+  <section class="page-hero">
+    <div class="container">
+      <div class="eyebrow muted">Pricing</div>
+      <h1>One price per organisation. No per-seat games.</h1>
+      <p class="lede">
+        We scope each quote against your supplier count and order volume. Whether your team is five or fifty, the price doesn't change.
       </p>
     </div>
   </section>
 
-  <!-- Pricing detail -->
-  <section class="bg-surface py-16 sm:py-20">
-    <div class="max-w-2xl mx-auto px-4 sm:px-6">
+  <section class="section">
+    <div class="container">
+      <div class="pricing-grid">
+        <div class="pricing-card">
+          <span class="eyebrow label" style="color:var(--accent);">How we price</span>
+          <h3>Scoped to your operation</h3>
+          <p>Pricing is based on active suppliers and order volume. There are no setup fees, no per-seat charges, no caps on jobs, catalogue items, or storage.</p>
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:32px 0 28px; position:relative;">
+            {facts.map((f) => (
+              <div style="border-top:1px solid rgba(255,255,255,0.18); padding-top:10px;">
+                <div style="font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:rgba(255,255,255,0.55); font-weight:600;">{f.label}</div>
+                <div style="font-family:var(--font-display); font-weight:600; font-size:22px; color:#fff; margin-top:4px;">{f.val}</div>
+              </div>
+            ))}
+          </div>
+          <div style="display:flex; gap:12px; position:relative; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="/contact">Get a quote</a>
+            <a class="btn btn-ghost" href="/how-it-works">See how it works</a>
+          </div>
+        </div>
 
-      <div class="bg-surface-2 border border-slate/15 rounded-2xl p-8 sm:p-10 text-center">
-        <p class="font-display font-semibold uppercase text-xs tracking-widest text-slate mb-4">How we price</p>
-        <h2 class="font-display font-bold text-3xl text-navy uppercase tracking-wide mb-6">
-          Scoped to your operation
-        </h2>
-        <p class="font-body text-base text-muted leading-relaxed mb-6">
-          Pricing is based on the number of active suppliers and your order volume — not the number of staff who log in.
-          We scope each quote individually so you're not paying for capacity you don't use.
-        </p>
-        <p class="font-body text-base text-muted leading-relaxed mb-8">
-          There are no setup fees, no per-seat charges, and no limits on how many jobs or catalogue items you can manage.
-        </p>
-        <a
-          href="/contact"
-          class="inline-block px-8 py-3.5 bg-brass text-navy font-display font-bold uppercase text-sm tracking-[0.08em] rounded hover:bg-brass-dark transition-colors duration-200"
-        >
-          Get a quote
-        </a>
+        <div class="pricing-includes">
+          <h4>What's always included</h4>
+          <ul>
+            {includes.map((s) => (
+              <li>
+                <Icon name="check" size={14} strokeWidth={2.5} />
+                {s}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
 
-      <!-- What's included -->
-      <div class="mt-12">
-        <h2 class="font-display font-bold text-xl text-navy uppercase tracking-wide mb-6 text-center">What's included</h2>
-        <ul class="space-y-3">
-          {[
-            'Unlimited users (members, buyers, accounts, delivery)',
-            'Unlimited jobs and catalogue items',
-            'Supplier price book management and expiry alerts',
-            'Purchase order generation and tracking',
-            'Proof-of-delivery photo uploads',
-            'Invoice matching and discrepancy flagging',
-            'Spend reports by job, supplier, and period',
-            'UK-based support',
-          ].map((item) => (
-            <li class="flex items-start gap-3">
-              <svg class="w-5 h-5 text-brass shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-              </svg>
-              <span class="font-body text-sm text-body-text">{item}</span>
-            </li>
+      <div style="margin-top:64px;">
+        <div class="section-head" style="margin-bottom:24px;">
+          <span class="eyebrow accent">Sizing</span>
+          <h2>Roughly where you sit</h2>
+          <p class="lede">A rough sketch — your actual quote depends on supplier count and order volume.</p>
+        </div>
+        <div class="sizing-grid" style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+          {sizes.map((s) => (
+            <div style="background:#fff; border:1px solid var(--border); border-radius:12px; padding:24px;">
+              <div class="eyebrow accent" style="margin-bottom:6px;">{s.size}</div>
+              <div style="font-family:var(--font-display); font-weight:700; font-size:22px; text-transform:uppercase; color:var(--mw-500); margin-bottom:10px; line-height:1.1;" set:html={s.desc} />
+              <p style="font-size:13px; color:var(--text-secondary); margin:0;">{s.notes}</p>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
 
+      <div style="margin-top:80px; max-width:800px;">
+        <div class="section-head" style="margin-bottom:20px;">
+          <span class="eyebrow">Questions we get</span>
+          <h2>Pricing FAQs</h2>
+        </div>
+        {faqs.map((f, i) => (
+          <details class="faq" open={i === 0}>
+            <summary>{f.q}</summary>
+            <div class="answer">{f.a}</div>
+          </details>
+        ))}
+      </div>
     </div>
   </section>
 
-  <ContactCTA
-    heading="Get a quote"
-    sub="Tell us about your suppliers and team size and we'll come back with a number the same day."
+  <CtaBand
+    heading="Want a number?"
+    sub="Tell us your supplier count and rough order volume. We come back with a quote the same working day."
   />
-
 </BaseLayout>

@@ -1,0 +1,89 @@
+---
+import Icon from './Icon.astro';
+import PortalNav from './PortalNav.astro';
+
+interface Props {
+  height?: number;
+}
+const { height = 480 } = Astro.props;
+
+const CATALOGUE = [
+  { code: 'CHM-0014', title: 'Foam Gun Applicator (Steel)',    unit: 'Each', supplier: 'Trent Supplies',    price: 17.46 },
+  { code: 'CHM-0015', title: 'Expanding Foam Can with Nozzle', unit: 'Each', supplier: 'Brackman Hardware', price: 3.75 },
+  { code: 'CHM-0016', title: 'Foam Gun Cleaner 500ml',         unit: 'Each', supplier: 'Trent Supplies',    price: 3.07 },
+  { code: 'CHM-0017', title: 'Expanding Foam Can — Dual B3',   unit: 'Each', supplier: 'Trent Supplies',    price: 4.56 },
+  { code: 'CHM-0018', title: 'Skeleton Caulking Gun',          unit: 'Each', supplier: null,                price: null },
+  { code: 'CHM-0019', title: 'Grease Gun, Lever Action',       unit: 'Each', supplier: 'Trent Supplies',    price: 12.09 },
+];
+const CATEGORIES = [
+  { name: 'All Items', n: 623, active: true },
+  { name: 'Chemicals & Consumables', n: 22 },
+  { name: 'Cutting & Drilling', n: 114 },
+  { name: 'Fixings & Fasteners', n: 62 },
+  { name: 'Formwork & Concrete', n: 144 },
+  { name: 'Lifting & Rigging', n: 74 },
+  { name: 'Office Supplies', n: 10 },
+  { name: 'PPE', n: 89 },
+  { name: 'Site Safety & Environment', n: 41 },
+  { name: 'Small Tools & Equipment', n: 53 },
+  { name: 'Storage & Handling', n: 14 },
+];
+---
+
+<div class="pf catalogue" style={`height:${height}px;`}>
+  <PortalNav section="catalogue" job="J-204 — Northfield Yard" basketCount={3} user="James B." />
+  <div class="pf-body">
+    <aside class="pf-sb">
+      <div class="pf-search">
+        <Icon name="search" size={14} />
+        <input class="pf-input" placeholder="Search items…" readonly />
+      </div>
+      <div class="pf-cat-h">Categories</div>
+      <div class="pf-cat">
+        {CATEGORIES.map((c) => (
+          <div class={`pf-cat-row${c.active ? ' active' : ''}`}>
+            <span>{c.name}</span>
+            <span class="n">{c.n}</span>
+          </div>
+        ))}
+      </div>
+      <div class="pf-sb-foot">
+        <div class="it">Special Items</div>
+        <div class="it"><Icon name="rotateCcw" size={14} /> Repeat Order</div>
+      </div>
+    </aside>
+    <div class="pf-main">
+      <div class="pf-main-head">
+        <h2>Chemicals</h2>
+        <span class="ct">16 items</span>
+      </div>
+      <div class="pf-list">
+        {CATALOGUE.map((item, i) => (
+          <div class="cat-row">
+            <div class="thumb"><Icon name="cube" size={24} strokeWidth={1.5} /></div>
+            <div class="info">
+              <div class="title">{item.title}</div>
+              <div class="meta">{item.code} · {item.unit}</div>
+              <div style="margin-top:6px;"><span class="pill">Global</span></div>
+              <div class="supplier">
+                {item.supplier ? (
+                  <>
+                    <span class="name"><span class="tick">✓</span>{item.supplier}</span>
+                    <span class="price">£{item.price?.toFixed(2)}</span>
+                  </>
+                ) : (
+                  <span class="empty">No supplier price yet</span>
+                )}
+              </div>
+            </div>
+            <div class={`stepper${i === 0 ? ' in-basket' : ''}`}>
+              <button type="button">−</button>
+              <span class="v">{i === 0 ? 2 : 0}</span>
+              <button type="button">+</button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>

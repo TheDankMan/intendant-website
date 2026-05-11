@@ -1,0 +1,60 @@
+---
+import Icon from './Icon.astro';
+import PortalNav from './PortalNav.astro';
+
+interface Props {
+  height?: number;
+}
+const { height = 480 } = Astro.props;
+
+const items = [
+  { code: 'CHM-0014', title: 'Foam Gun Applicator (Steel)',    unit: 'Each', supplier: 'Trent Supplies',    price: 17.46, qty: 0 },
+  { code: 'CHM-0015', title: 'Expanding Foam Can with Nozzle', unit: 'Each', supplier: 'Brackman Hardware', price: 3.75,  qty: 6 },
+  { code: 'STL-CUSTOM-3T', title: 'Custom steel fabrication · 3.2t', unit: 'lot', rfq: true, qty: 0 },
+  { code: 'CHM-0017', title: 'Expanding Foam Can — Dual B3',   unit: 'Each', supplier: 'Trent Supplies',    price: 4.56,  qty: 0 },
+];
+---
+
+<div class="pf catalogue" style={`height:${height}px;`}>
+  <PortalNav section="catalogue" job="J-204 Northfield" basketCount={1} user="James B." />
+  <div class="pf-toolbar">
+    <span class="title">Catalogue</span>
+    <span class="ibadge info">MIXED MODE</span>
+    <span class="meta">Fixed-price + RFQ items in one basket</span>
+  </div>
+  <div style="flex:1; padding:12px; display:grid; grid-template-columns:1fr 1fr; gap:10px; overflow:hidden; align-content:start;">
+    {items.map((it) => it.rfq ? (
+      <div class="p-card" style="padding:14px; display:flex; gap:14px; align-items:flex-start; border-color:#FBBF24; flex-direction:row;">
+        <div style="width:56px; height:56px; background:#FFFBEB; border-radius:10px; display:flex; align-items:center; justify-content:center; color:#B45309; flex:0 0 auto;">
+          <Icon name="cube" size={28} strokeWidth={1.5} />
+        </div>
+        <div style="flex:1; min-width:0;">
+          <div style="display:flex; align-items:center; gap:6px; flex-wrap:wrap;">
+            <span style="font-size:13px; font-weight:600;">{it.title}</span>
+            <span class="ibadge warning">QUOTE REQUIRED</span>
+          </div>
+          <div style="font-size:11px; color:var(--text-secondary); margin-top:2px; font-family:var(--font-mono);">{it.code} · {it.unit}</div>
+          <div style="font-size:11px; color:var(--text-secondary); margin-top:6px;">No fixed price — sent to 3 suppliers on request</div>
+        </div>
+        <button class="p-btn theme" type="button" style="height:32px;">Add to RFQ</button>
+      </div>
+    ) : (
+      <div class="cat-row">
+        <div class="thumb"><Icon name="cube" size={28} strokeWidth={1.5} /></div>
+        <div class="info">
+          <div class="title">{it.title}{it.qty > 0 && <span class="ibadge success" style="margin-left:6px;">{it.qty} IN BASKET</span>}</div>
+          <div class="meta">{it.code} · {it.unit}</div>
+          <div class="supplier">
+            <span class="name"><span class="tick">✓</span>{it.supplier}</span>
+            <span class="price">£{it.price?.toFixed(2)}</span>
+          </div>
+        </div>
+        <div class={`stepper${it.qty > 0 ? ' in-basket' : ''}`}>
+          <button type="button">−</button>
+          <span class="v">{it.qty}</span>
+          <button type="button">+</button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>

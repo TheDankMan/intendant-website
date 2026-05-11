@@ -1,0 +1,34 @@
+---
+import Icon from './Icon.astro';
+
+const lines = [
+  { line: 'Timber stud 89 × 38mm', req: 24, rec: 24, ok: true },
+  { line: 'OSB3 18mm sheet',       req: 6,  rec: 6,  ok: true },
+  { line: 'Plasterboard 12.5mm',   req: 12, rec: 8,  ok: false },
+];
+---
+
+<div style="background:#fff; border:1px solid var(--border); border-radius:12px; padding:16px; font-family:var(--font-body); max-width:360px; box-shadow:var(--shadow-md);">
+  <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+    <Icon name="doc" size={16} color="var(--mw-500)" />
+    <span style="font-size:13px; font-weight:700;">Delivery docket</span>
+    <span class="sbadge part">PART DELIVERED</span>
+  </div>
+  <div style="background:var(--surface-sunken); border-radius:6px; padding:10px; margin-bottom:10px; font-size:11px; color:var(--text-secondary); display:flex; justify-content:space-between;">
+    <span>DN-TP-44182</span>
+    <span style="font-family:var(--font-mono);">23 Mar 2026 · 10:42</span>
+  </div>
+  <div style="display:flex; flex-direction:column; gap:6px; font-size:12px;">
+    {lines.map((l) => (
+      <div style="display:flex; align-items:center; gap:8px;">
+        <Icon name={l.ok ? 'check' : 'warn'} size={14} color={l.ok ? '#15803D' : '#B45309'} strokeWidth={2.5} />
+        <span style="flex:1;">{l.line}</span>
+        <span style={`font-family:var(--font-mono); color:${l.ok ? 'var(--text-primary)' : '#B45309'};`}>{l.rec}/{l.req}</span>
+      </div>
+    ))}
+  </div>
+  <div style="margin-top:12px; padding-top:10px; border-top:1px solid var(--border-subtle); font-size:10px; color:var(--text-muted); display:flex; justify-content:space-between;">
+    <span>Linked to ORD-J204-015</span>
+    <span>📷 PoD photo attached</span>
+  </div>
+</div>

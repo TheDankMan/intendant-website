@@ -1,0 +1,61 @@
+---
+import Icon from './Icon.astro';
+import PortalNav from './PortalNav.astro';
+
+interface Props {
+  height?: number;
+}
+const { height = 480 } = Astro.props;
+
+const months = ['Oct', 'Nov', 'Dec', 'Jan', 'Feb', 'Mar'];
+const values = [38, 52, 41, 67, 58, 74];
+const max = Math.max(...values);
+const suppliers = [
+  { name: 'Travis Perkins', pct: 42, color: '#7C3AED' },
+  { name: 'Jewson',         pct: 28, color: '#A78BFA' },
+  { name: 'SIG',            pct: 18, color: '#C4B5FD' },
+  { name: 'Screwfix',       pct: 12, color: '#DDD6FE' },
+];
+---
+
+<div class="pf reports" style={`height:${height}px;`}>
+  <PortalNav section="reports" job="J-204 Northfield" basketCount={3} user="James B." />
+  <div class="pf-toolbar">
+    <span class="title">Spend report</span>
+    <span class="meta">· Oct 25 – Mar 26</span>
+    <button type="button" class="p-btn secondary" style="margin-left:auto;">
+      <Icon name="download" size={12} /> CSV
+    </button>
+  </div>
+  <div style="flex:1; padding:14px; display:grid; grid-template-columns:1.5fr 1fr; gap:12px; overflow:hidden;">
+    <div class="p-card">
+      <div class="h">Spend last 6 months</div>
+      <div style="font-family:var(--font-display); font-weight:700; font-size:26px; color:var(--text-primary); margin-top:2px;">£330,418</div>
+      <div style="font-size:11px; color:#15803D; font-weight:600;">↑ 12% vs prior</div>
+      <div style="margin-top:14px; height:130px; display:flex; align-items:flex-end; gap:8px;">
+        {values.map((v, i) => (
+          <div style="flex:1; height:100%; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; gap:4px;">
+            <div style={`width:100%; height:${(v / max) * 100}%; background:${i === values.length - 1 ? '#7C3AED' : '#C4B5FD'}; border-radius:3px;`}></div>
+            <span style="font-size:9px; color:var(--text-muted); font-family:var(--font-mono);">{months[i]}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+    <div class="p-card">
+      <div class="h" style="margin-bottom:10px;">By supplier</div>
+      <div style="display:flex; flex-direction:column; gap:8px;">
+        {suppliers.map((s) => (
+          <div>
+            <div style="display:flex; justify-content:space-between; font-size:11px; margin-bottom:3px;">
+              <span style="font-weight:600;">{s.name}</span>
+              <span style="font-family:var(--font-mono); color:var(--text-secondary);">{s.pct}%</span>
+            </div>
+            <div style="height:6px; background:#F1F5F9; border-radius:3px; overflow:hidden;">
+              <div style={`width:${s.pct}%; height:100%; background:${s.color};`}></div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>

@@ -54,9 +54,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       })} />
     )}
   </head>
-  <body class="min-h-screen flex flex-col">
+  <body>
     <Nav currentPath={currentPath} />
-    <main class="flex-1">
+    <main>
       <slot />
     </main>
     <Footer />

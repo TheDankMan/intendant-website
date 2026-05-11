@@ -1,0 +1,60 @@
+---
+import Icon from './Icon.astro';
+
+const pdfs = [
+  { tag: 'PO',      refNo: 'PO-015',  accent: '#1D4ED8', lines: [85, 92, 70, 88, 60, 75] },
+  { tag: 'DOCKET',  refNo: 'DN-4418', accent: '#15803D', lines: [78, 88, 65, 82, 70] },
+  { tag: 'INVOICE', refNo: 'INV-4421',accent: '#B45309', lines: [90, 88, 72, 95, 65, 80] },
+];
+const rows = [
+  { k: 'Supplier',    v: 'Travis Perkins',     ok: true },
+  { k: 'Net total',   v: '£1,842.40',          ok: true },
+  { k: 'VAT 20%',     v: '£368.48',            ok: true },
+  { k: 'Lines',       v: '3 of 3',             ok: true },
+  { k: 'Price drift', v: '1 line · £4.20',     ok: false },
+];
+---
+
+<div style="background:#fff; border:1px solid var(--border); border-radius:12px; padding:14px; font-family:var(--font-body); width:100%; max-width:580px; box-shadow:var(--shadow-md);">
+  <div style="display:flex; align-items:center; gap:8px; margin-bottom:10px;">
+    <Icon name="checkCircle" size={16} color="#B45309" />
+    <span style="font-size:12px; font-weight:700;">3-way match · INV-4421</span>
+    <span class="ibadge warning">1 FLAG</span>
+    <button class="p-btn theme" type="button" style="margin-left:auto; height:26px; font-size:10px;">
+      <Icon name="check" size={12} /> Send to Xero
+    </button>
+  </div>
+  <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:10px;">
+    <div style="display:flex; gap:6px; height:150px;">
+      {pdfs.map((p) => (
+        <div style={`flex:1; min-width:0; background:#fff; border:1px solid ${p.accent}; border-radius:8px; overflow:hidden; display:flex; flex-direction:column;`}>
+          <div style={`background:${p.accent}; color:#fff; padding:5px 8px; font-size:9px; font-weight:700; letter-spacing:0.08em; display:flex; justify-content:space-between;`}>
+            <span>{p.tag}</span>
+            <span style="font-family:var(--font-mono); opacity:0.8;">{p.refNo}</span>
+          </div>
+          <div style="flex:1; padding:8px; background:#FAFAFA; display:flex; flex-direction:column; gap:3px;">
+            {p.lines.map((w) => (
+              <div style={`height:5px; background:#E2E8F0; border-radius:2px; width:${w}%;`}></div>
+            ))}
+          </div>
+        </div>
+      ))}
+    </div>
+    <div style="background:var(--surface-sunken); border:1px solid var(--border); border-radius:8px; padding:10px; display:flex; flex-direction:column; gap:6px;">
+      <div style="font-size:9px; font-weight:700; color:var(--text-muted); letter-spacing:0.08em; text-transform:uppercase;">Extracted &amp; matched</div>
+      {rows.map((r) => (
+        <div style="display:flex; justify-content:space-between; font-size:10px; align-items:center; gap:6px;">
+          <span style="color:var(--text-secondary);">{r.k}</span>
+          <span style={`display:flex; align-items:center; gap:4px; font-family:var(--font-mono); font-weight:600; color:${r.ok ? 'var(--text-primary)' : '#B45309'};`}>
+            {r.v}
+            <Icon name={r.ok ? 'check' : 'warn'} size={12} color={r.ok ? '#15803D' : '#B45309'} strokeWidth={2.5} />
+          </span>
+        </div>
+      ))}
+      <div style="margin-top:auto; padding-top:8px; border-top:1px solid var(--border); font-size:9px; color:var(--text-muted); display:flex; justify-content:space-between;">
+        <span>→ Xero · Sage · QBO</span>
+        <span style="font-family:var(--font-mono);">Ready</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,184 +1,344 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import ContactCTA from '../components/ContactCTA.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Icon from '../components/product/Icon.astro';
+import CatalogueScreen from '../components/product/CatalogueScreen.astro';
+import RfqScreen from '../components/product/RfqScreen.astro';
+import MixedModeScreen from '../components/product/MixedModeScreen.astro';
+import BasketDrawerMock from '../components/product/BasketDrawerMock.astro';
+import HistoryScreen from '../components/product/HistoryScreen.astro';
+import ReportsScreen from '../components/product/ReportsScreen.astro';
+import DeliveryDocketMock from '../components/product/DeliveryDocketMock.astro';
+import InvoiceMatchMock from '../components/product/InvoiceMatchMock.astro';
+
+const beforeList = [
+  'Orders by WhatsApp, phone, email',
+  'Price books in shared spreadsheets',
+  'Dockets photographed, then misplaced',
+  'Invoices matched by eye at month-end',
+  'No-one knows the live job spend',
+];
+const afterList = [
+  'Every order tagged to a job, on submit',
+  'Agreed prices applied automatically',
+  'PoD photos linked to the order',
+  'PO ↔ docket ↔ invoice matched on arrival',
+  'Live spend per job, per supplier',
+];
+
+const modes = [
+  {
+    tag: 'MODE 01', kicker: 'Fixed-price', title: 'Catalogue',
+    body: "For suppliers you've agreed prices with. Staff browse, add to basket, submit. PO goes out at agreed rates.",
+    fits: 'Merchants on contract. Standing trade accounts.',
+    accent: '#1E3A5F',
+  },
+  {
+    tag: 'MODE 02', kicker: 'Quote per order', title: 'RFQ',
+    body: 'For suppliers without price books, or one-off items. Issue an RFQ to multiple suppliers, compare quotes in one view, award with one click.',
+    fits: 'Steel, specialist trades, custom fabrication, plant hire.',
+    accent: '#B45309',
+  },
+  {
+    tag: 'MODE 03', kicker: 'Both at once', title: 'Mixed',
+    body: 'Most teams run both. Mixed mode lets a single order combine catalogue lines with RFQ lines — the routing splits automatically.',
+    fits: 'Multi-trade contractors. Anyone with a real supplier list.',
+    accent: '#7C3AED',
+  },
+];
+
+const features = [
+  { n: '01', title: 'Supplier catalogue', body: 'One searchable item list spanning every supplier. Each SKU mapped to a primary plus alternates.' },
+  { n: '02', title: 'Price book imports', body: 'Upload supplier price lists per quarter. Expiry alerts before contracts lapse.' },
+  { n: '03', title: 'Order by job', body: 'Job codes stamped at the basket. Finance always knows which site each line went to.' },
+  { n: '04', title: 'Multi-supplier baskets', body: 'One basket, split automatically into one structured purchase order per supplier.' },
+  { n: '05', title: 'Approval flows', body: 'Approval thresholds by user, job, or value. Trusted users flow through; the rest queue for a buyer.' },
+  { n: '06', title: 'Proof of delivery', body: 'Photo + signature uploads from any phone. Stamped, timestamped, linked to the order.' },
+  { n: '07', title: 'Invoice match', body: 'Three-way PO ↔ docket ↔ invoice reconciliation with line-level discrepancy flags.' },
+  { n: '08', title: 'Spend reports', body: 'By supplier, job, period. Export to CSV. Push approved values to your accounts tool.' },
+  { n: '09', title: 'Role-based access', body: "Site managers, buyers, accounts, and admins each see what they need — nothing they don't." },
+];
 ---
 
-<BaseLayout title="Intendant — Every order. Every supplier. One place.">
+<BaseLayout title="Intendant — Every order. Every supplier. One ledger.">
 
-  <!-- Hero -->
-  <section class="bg-navy pt-20 pb-24 sm:pt-28 sm:pb-32">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-      <p class="font-display font-semibold uppercase text-xs tracking-widest text-brass mb-5">
-        Procurement software for multi-supplier teams
-      </p>
-      <h1 class="font-display font-bold text-5xl sm:text-6xl lg:text-7xl text-white uppercase leading-none tracking-wide mb-6">
-        Every order.<br class="hidden sm:block" /> Every supplier.<br class="hidden sm:block" /> One place.
-      </h1>
-      <p class="font-body text-lg sm:text-xl text-white/70 max-w-2xl mx-auto mb-10 leading-relaxed">
-        Intendant is a procurement portal for teams that buy from multiple suppliers.
-        Order by job, track deliveries, and match invoices — without the spreadsheets and email chains.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-3 justify-center">
-        <a
-          href="/contact"
-          class="px-8 py-3.5 bg-brass text-navy font-display font-bold uppercase text-sm tracking-[0.08em] rounded hover:bg-brass-dark transition-colors duration-200"
-        >
-          Get in touch
-        </a>
-        <a
-          href="/how-it-works"
-          class="px-8 py-3.5 border border-white/20 text-white font-display font-semibold uppercase text-sm tracking-[0.08em] rounded hover:border-white/40 hover:bg-white/5 transition-colors duration-200"
-        >
-          How it works
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Problem statement -->
-  <section class="bg-surface-2 py-16 sm:py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <p class="font-display font-semibold uppercase text-xs tracking-widest text-slate mb-3">The problem</p>
-        <h2 class="font-display font-bold text-3xl sm:text-4xl text-navy uppercase tracking-wide">
-          Buying from more than three suppliers?<br class="hidden sm:block" /> You already know what this costs you.
-        </h2>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-3xl mx-auto">
-        {[
-          'Orders placed by phone, email, and WhatsApp — with no audit trail',
-          'Price books living in spreadsheets no one trusts',
-          'Deliveries arriving at site with nobody knowing which job they were for',
-          'Month-end spent manually matching invoices across five different inboxes',
-          'No visibility of what\'s been ordered until it arrives — or doesn\'t',
-          'Staff ordering the wrong items because the catalogue lives in someone\'s head',
-        ].map((point) => (
-          <div class="flex items-start gap-3 bg-white rounded-lg p-4 border border-slate/10">
-            <svg class="w-5 h-5 text-brass shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-            <p class="font-body text-sm text-body-text leading-snug">{point}</p>
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow accent">Procurement software · UK</div>
+          <h1>
+            Every order.<br />
+            Every supplier.<br />
+            <span class="accent">One ledger.</span>
+          </h1>
+          <p class="lede light">
+            Intendant is a single portal for organisations that buy from three or more suppliers — whether you order from a fixed price book, request quotes every time, or run both side by side.
+          </p>
+          <div style="display:flex; gap:12px; margin-top:28px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="/contact">Book a walkthrough</a>
+            <a class="btn btn-ghost" href="/how-it-works">See how it works →</a>
           </div>
-        ))}
+          <div class="kpi-strip">
+            <div class="kpi"><div class="kpi-val">3+</div><div class="kpi-label">Suppliers, one workflow</div></div>
+            <div class="kpi"><div class="kpi-val">£0.00</div><div class="kpi-label">Lost on unmatched dockets</div></div>
+            <div class="kpi"><div class="kpi-val">2.4d</div><div class="kpi-label">Avg. order-to-delivery cycle</div></div>
+          </div>
+        </div>
+        <div style="position:relative;">
+          <div class="product-frame">
+            <div class="inner"><CatalogueScreen /></div>
+          </div>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Features -->
-  <section class="bg-surface py-16 sm:py-20">
-    <div class="max-w-6xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <p class="font-display font-semibold uppercase text-xs tracking-widest text-slate mb-3">What Intendant does</p>
-        <h2 class="font-display font-bold text-3xl sm:text-4xl text-navy uppercase tracking-wide">
-          End-to-end procurement.<br class="hidden sm:block" /> No moving parts you don't control.
-        </h2>
+  <section class="customer-strip">
+    <div class="container">
+      <span class="label">In production with</span>
+      <div class="midwest-lockup">
+        MIDWEST<span class="est">EST.<br />1977</span>
       </div>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[
-          {
-            icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 010 3.75H5.625a1.875 1.875 0 010-3.75z" />`,
-            title: 'Supplier catalogue',
-            body: 'One searchable catalogue covering all your suppliers. Staff order from a single interface — Intendant routes each line to the right supplier automatically.',
-          },
-          {
-            icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" />`,
-            title: 'Order by job',
-            body: 'Every order is tagged to a job or project code. See exactly what\'s been ordered, by whom, for which job — and total spend per project at a glance.',
-          },
-          {
-            icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.536 12.219 12.768 12 12 12c-.725 0-1.45-.22-2.003-.659-1.106-.879-1.106-2.303 0-3.182s2.9-.879 4.006 0l.415.33M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />`,
-            title: 'Supplier price books',
-            body: 'Upload price lists per supplier. Intendant applies the agreed price automatically and alerts you when contracts are approaching expiry.',
-          },
-          {
-            icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" />`,
-            title: 'Delivery tracking',
-            body: 'Drivers upload proof-of-delivery photos from their phone. Every delivery is timestamped and linked to the original order — no more chasing paperwork.',
-          },
-          {
-            icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m2.25 0H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />`,
-            title: 'Invoice matching',
-            body: 'Match supplier invoices against purchase orders line by line. Discrepancies are flagged before they reach the accounts team — not after.',
-          },
-          {
-            icon: `<path stroke-linecap="round" stroke-linejoin="round" d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />`,
-            title: 'Spend reporting',
-            body: 'Spend by supplier, by job, by date range — filtered and exported in seconds. The data your finance team needs without them having to ask for it.',
-          },
-        ].map((feature) => (
-          <div class="bg-surface-2 rounded-xl p-6 border border-slate/10">
-            <div class="w-10 h-10 bg-navy/10 rounded-lg flex items-center justify-center mb-4">
-              <svg class="w-5 h-5 text-navy" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.75" set:html={feature.icon} />
+      <span style="font-size:13px; color:var(--text-secondary); line-height:1.4;">
+        Midwest Construction has been running its weekly procurement on Intendant since 2026 — six site managers, four suppliers, ~£2.4m / year of trade purchases.
+      </span>
+    </div>
+  </section>
+
+  <section class="section section-canvas">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">The problem</span>
+        <h2>When ordering lives in inboxes, accounts pays for it.</h2>
+        <p class="lede">
+          The cost of multi-supplier procurement isn't the suppliers — it's the seams between them. Phone orders. Photographed dockets. Spreadsheets nobody trusts. Invoices that don't quite match anything.
+        </p>
+      </div>
+
+      <div class="before-after" style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
+        <div class="card-flat" style="padding:28px; background:#fff; border-color:var(--border-subtle);">
+          <div class="eyebrow" style="color:#B91C1C;">Before</div>
+          <h3 style="font-family:var(--font-display); font-weight:700; font-size:24px; text-transform:uppercase; margin:12px 0 16px; color:var(--mw-500);">
+            Six places, no single record
+          </h3>
+          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:12px;">
+            {beforeList.map((s) => (
+              <li style="display:grid; grid-template-columns:18px 1fr; gap:10px; font-size:14px; align-items:center;">
+                <Icon name="x" size={14} color="#B91C1C" strokeWidth={2.5} />
+                <span style="color:var(--text-secondary);">{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="card-flat" style="padding:28px; background:var(--mw-500); color:#fff; border-color:var(--mw-500);">
+          <div class="eyebrow" style="color:var(--accent);">After Intendant</div>
+          <h3 style="font-family:var(--font-display); font-weight:700; font-size:24px; text-transform:uppercase; margin:12px 0 16px; color:#fff;">
+            One ledger, end to end
+          </h3>
+          <ul style="list-style:none; padding:0; margin:0; display:flex; flex-direction:column; gap:12px;">
+            {afterList.map((s) => (
+              <li style="display:grid; grid-template-columns:18px 1fr; gap:10px; font-size:14px; align-items:center;">
+                <Icon name="check" size={14} color="var(--accent)" strokeWidth={2.5} />
+                <span style="color:rgba(255,255,255,0.82);">{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow accent">Three modes · one portal</span>
+        <h2>Buy how you actually buy.</h2>
+        <p class="lede">
+          Not every supplier gives you a price book. Intendant covers fixed-price ordering, quote-per-order procurement, and everything in between — in the same workflow, on the same record.
+        </p>
+      </div>
+      <div class="modes-grid">
+        {modes.map((m, i) => (
+          <div class="mode-card">
+            <div class="mode-shot" style={`border-color:${m.accent};`}>
+              <div class="mode-inner">
+                {i === 0 && <CatalogueScreen />}
+                {i === 1 && <RfqScreen />}
+                {i === 2 && <MixedModeScreen />}
+              </div>
             </div>
-            <h3 class="font-display font-bold text-lg text-navy uppercase tracking-wide mb-2">
-              {feature.title}
-            </h3>
-            <p class="font-body text-sm text-muted leading-relaxed">
-              {feature.body}
-            </p>
-          </div>
-        ))}
-      </div>
-    </div>
-  </section>
-
-  <!-- How it works (summary) -->
-  <section class="bg-surface-2 py-16 sm:py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-12">
-        <p class="font-display font-semibold uppercase text-xs tracking-widest text-slate mb-3">The workflow</p>
-        <h2 class="font-display font-bold text-3xl sm:text-4xl text-navy uppercase tracking-wide">
-          Set up once. Use it every day.
-        </h2>
-      </div>
-      <ol class="grid grid-cols-1 sm:grid-cols-2 gap-6">
-        {[
-          { n: '01', title: 'Set up your catalogue', body: 'Import your supplier items and price books. One-time setup — Intendant keeps everything in sync as prices change.' },
-          { n: '02', title: 'Staff place orders by job', body: 'Team members browse the catalogue, select items, and tag the order to a job code. No phone calls needed.' },
-          { n: '03', title: 'Orders go to suppliers', body: 'Intendant routes each line to the right supplier as a structured purchase order. You get a full audit trail.' },
-          { n: '04', title: 'Track, receive, and reconcile', body: 'Deliveries are confirmed with proof-of-delivery photos. Invoices are matched automatically against POs.' },
-        ].map((step) => (
-          <li class="flex gap-5 bg-white rounded-xl p-6 border border-slate/10">
-            <span class="font-display font-bold text-3xl text-brass/40 leading-none shrink-0 w-8">{step.n}</span>
-            <div>
-              <h3 class="font-display font-bold text-lg text-navy uppercase tracking-wide mb-1">{step.title}</h3>
-              <p class="font-body text-sm text-muted leading-relaxed">{step.body}</p>
+            <div class="mode-body">
+              <div class="mode-tag" style={`color:${m.accent};`}>{m.tag} · {m.kicker.toUpperCase()}</div>
+              <h3>{m.title}</h3>
+              <p>{m.body}</p>
+              <div class="mode-fits"><strong>Fits:</strong> {m.fits}</div>
             </div>
-          </li>
-        ))}
-      </ol>
-      <div class="text-center mt-8">
-        <a href="/how-it-works" class="font-display font-semibold uppercase text-sm tracking-[0.06em] text-slate hover:text-navy transition-colors duration-200">
-          Full walkthrough →
-        </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Who it's for -->
-  <section class="bg-surface py-16 sm:py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6">
-      <div class="text-center mb-10">
-        <p class="font-display font-semibold uppercase text-xs tracking-widest text-slate mb-3">Who it's for</p>
-        <h2 class="font-display font-bold text-3xl sm:text-4xl text-navy uppercase tracking-wide">
-          Built for organisations that order at volume
-        </h2>
-      </div>
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
-        {[
-          { title: '3+ active suppliers', body: 'If you\'re coordinating orders across multiple suppliers, Intendant gives you one place to manage all of them.' },
-          { title: 'Project-based buying', body: 'Order lines tagged to job codes mean your finance team always knows what was spent on which project.' },
-          { title: '5 to 200 staff', body: 'Role-based access for field staff, buyers, accounts, and delivery — each seeing what they need, nothing they don\'t.' },
-        ].map((card) => (
-          <div class="text-center px-4">
-            <h3 class="font-display font-bold text-xl text-navy uppercase tracking-wide mb-2">{card.title}</h3>
-            <p class="font-body text-sm text-muted leading-relaxed">{card.body}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <ContactCTA />
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow accent">What it does</span>
+        <h2>Built for the full procurement loop — not just the front of it.</h2>
+        <p class="lede">
+          A catalogue and a basket are the easy bits. Intendant runs the parts that actually leak money: PO routing, partial deliveries, and three-way invoice match.
+        </p>
+      </div>
 
+      <div class="feature-row">
+        <div class="feature-text">
+          <div class="step-num">01 / CATALOGUE</div>
+          <h3>One catalogue. Right supplier per line.</h3>
+          <p>Your team browses one stock list — Intendant routes each line to the supplier you've agreed it with. Site staff don't need to know who carries what.</p>
+          <ul>
+            <li>Per-item supplier mapping with agreed unit prices</li>
+            <li>Multiple alternates per SKU for substitution</li>
+            <li>Filters by job, category, recent orders</li>
+            <li>Search by code, name, or supplier</li>
+          </ul>
+        </div>
+        <div class="feature-visual" style="position:relative;">
+          <div class="shot"><div class="inner"><CatalogueScreen /></div></div>
+          <div class="shot-caption"><span class="mono">Catalogue · A131 · Duffy-Rosshill</span></div>
+          <span class="annot" style="top:70px; left:32px;">Routes to Travis Perkins</span>
+        </div>
+      </div>
+
+      <div class="feature-row reverse">
+        <div class="feature-text">
+          <div class="step-num">02 / ORDER BASKET</div>
+          <h3>Tag every line to a job before it goes out.</h3>
+          <p>The basket isn't generic — it knows the job. Every order is stamped with a job code on submit, so finance never has to ask who it was for.</p>
+          <ul>
+            <li>Job code captured on every line</li>
+            <li>Multi-supplier basket splits into one PO per supplier</li>
+            <li>Approval rules optional — flow-through for trusted users</li>
+            <li>Generates a structured PO; not an email</li>
+          </ul>
+        </div>
+        <div class="feature-visual" style="position:relative;">
+          <div class="shot">
+            <div class="inner">
+              <div style="background:var(--canvas); padding:16px; height:480px;">
+                <div style="height:100%; border:1px solid var(--border); border-radius:8px; overflow:hidden; background:#fff; max-width:360px; margin-left:auto;">
+                  <BasketDrawerMock />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="shot-caption"><span class="mono">Basket drawer · 3 items · 2 suppliers</span></div>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-text">
+          <div class="step-num">03 / HISTORY & DELIVERIES</div>
+          <h3>Every order has a status. Every status has a record.</h3>
+          <p>Open, part delivered, overdue, complete. Drivers upload a proof-of-delivery photo from their phone; it lands on the right order automatically.</p>
+          <ul>
+            <li>Live status across all open orders</li>
+            <li>Proof-of-delivery uploads from any device</li>
+            <li>Overdue orders surface with one click to chase</li>
+            <li>Part-deliveries tracked at the line level</li>
+          </ul>
+        </div>
+        <div class="feature-visual" style="position:relative;">
+          <div class="shot"><div class="inner"><HistoryScreen /></div></div>
+          <div class="shot-caption"><span class="mono">History · Last 30 days</span></div>
+          <span class="annot" style="top:175px; left:280px;">3 of 5 lines received</span>
+        </div>
+      </div>
+
+      <div class="feature-row reverse">
+        <div class="feature-text">
+          <div class="step-num">04 / INVOICE MATCH</div>
+          <h3>Three-way match without three browser tabs.</h3>
+          <p>When a supplier invoice lands, Intendant matches it line-by-line against the PO and the docket. Quantity mismatches, price drift, ghost lines — flagged before they reach the ledger.</p>
+          <ul>
+            <li>Line-level PO ↔ docket ↔ invoice match</li>
+            <li>Price drift flagged against agreed price book</li>
+            <li>Quantity discrepancies surface immediately</li>
+            <li>Approved matches push to your accounting tool</li>
+          </ul>
+        </div>
+        <div class="feature-visual" style="position:relative;">
+          <div class="shot">
+            <div class="inner">
+              <div style="background:var(--canvas); padding:16px; display:grid; gap:12px; height:480px; align-content:center;">
+                <DeliveryDocketMock />
+                <InvoiceMatchMock />
+              </div>
+            </div>
+          </div>
+          <div class="shot-caption"><span class="mono">Match · INV-TP-4421</span></div>
+        </div>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-text">
+          <div class="step-num">05 / REPORTS</div>
+          <h3>Spend, by job, by supplier, by week.</h3>
+          <p>Not a quarterly export. Today's spend, this week's open POs, this month's cycle time — visible to ops and finance the moment it changes.</p>
+          <ul>
+            <li>Spend by supplier, job, period</li>
+            <li>Cycle-time and overdue-order trends</li>
+            <li>CSV export for any view</li>
+            <li>Drill-through from any chart to the underlying orders</li>
+          </ul>
+        </div>
+        <div class="feature-visual" style="position:relative;">
+          <div class="shot"><div class="inner"><ReportsScreen /></div></div>
+          <div class="shot-caption"><span class="mono">Reports · March 2026</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-canvas">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">What's in the box</span>
+        <h2>The full operation — not just an ordering form.</h2>
+      </div>
+      <div class="grid-features">
+        {features.map((f) => (
+          <div class="gf-cell">
+            <div class="num">{f.n}</div>
+            <h4>{f.title}</h4>
+            <p>{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container" style="max-width:900px;">
+      <div class="quote">
+        <p class="text">
+          Before Intendant, we were copying delivery dockets into a spreadsheet by hand. Now every line on every invoice has a record against it — and our quarter-end is two days shorter.
+        </p>
+        <div class="byline">
+          <div class="avatar">JB</div>
+          <div>
+            <div><strong>James Bowen</strong></div>
+            <div><span>Operations Director, Midwest Construction</span></div>
+          </div>
+          <div style="margin-left:auto;" class="midwest-lockup">
+            MIDWEST<span class="est">EST.<br />1977</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    heading="See it with your suppliers."
+    sub="A 30-minute walkthrough with your actual price list. No slide decks."
+  />
 </BaseLayout>
