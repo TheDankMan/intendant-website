@@ -1222,3 +1222,13 @@ body.density-dense    { --pad-section: 56px; --pad-block: 20px; }
   font-size: 10px; font-weight: 700; color: var(--text-muted);
   letter-spacing: 0.08em; text-transform: uppercase;
 }
+
+/* ===== Contact form states ===== */
+.hp-field { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+.form-error { color: #B91C1C; font-size: 14px; margin: 12px 0 0; }
+
+/* ===== Legal pages ===== */
+.legal { max-width: 72ch; font-size: 16px; line-height: 1.65; color: var(--text-secondary); }
+.legal h2 { font-family: var(--font-display); font-weight: 700; font-size: 24px; text-transform: uppercase; color: var(--mw-500); margin: 40px 0 12px; }
+.legal ul { padding-left: 20px; }
+.legal a { color: var(--mw-500); text-decoration: underline; }
