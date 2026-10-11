@@ -1,0 +1,43 @@
+---
+interface Props {
+  height?: number;
+}
+const { height = 480 } = Astro.props;
+
+const pins = [
+  { x: 22, y: 30, s: 'pass', n: 'P-01' },
+  { x: 48, y: 26, s: 'pass', n: 'P-02' },
+  { x: 70, y: 40, s: 'fail', n: 'P-03' },
+  { x: 34, y: 62, s: 'open', n: 'P-04' },
+  { x: 62, y: 70, s: 'pass', n: 'P-05' },
+  { x: 82, y: 64, s: 'open', n: 'P-06' },
+];
+---
+
+<div class="pf safety" style={`height:${height}px;`}>
+  <div class="pf-toolbar">
+    <span class="title">GA Level 1 · Rev C</span>
+    <span class="meta">· Inspection points</span>
+    <span class="legend" style="margin-left:auto;">
+      <span><i class="dot pass"></i>Passed</span>
+      <span><i class="dot fail"></i>Failed</span>
+      <span><i class="dot open"></i>Open</span>
+    </span>
+  </div>
+  <div style="flex:1; padding:14px; overflow:hidden;">
+    <div class="drawing">
+      <svg viewBox="0 0 100 100" preserveAspectRatio="none" class="drawing-lines" fill="none" stroke="#94A3B8" stroke-width="0.4">
+        <rect x="8" y="12" width="84" height="76" />
+        <path d="M8 46h52M60 12v76M60 56h32M30 46v42M8 70h22" />
+        <path d="M14 18h40M14 22h40" stroke-dasharray="1 1" />
+      </svg>
+      {pins.map((p) => (
+        <span class={`pin ${p.s}`} style={`left:${p.x}%; top:${p.y}%;`}>{p.n}</span>
+      ))}
+      <div class="pin-pop" style="left:calc(70% - 80px); top:calc(40% + 18px);">
+        <strong>P-03 · Rebar cover</strong>
+        <span>Failed · NCR-014 raised · photo attached</span>
+      </div>
+    </div>
+  </div>
+</div>

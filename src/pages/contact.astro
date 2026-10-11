@@ -3,13 +3,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Icon from '../components/product/Icon.astro';
 ---
 
-<BaseLayout title="Contact — Intendant">
+<BaseLayout title="Contact — Intendant" description="Get in touch about Intendant Ordering, Site Safety, Dashboards or custom software.">
   <section class="page-hero">
     <div class="container">
       <div class="eyebrow muted">Get in touch</div>
-      <h1>30 minutes. Your suppliers. Real screens.</h1>
+      <h1>Tell us what you need.</h1>
       <p class="lede">
-        We'd rather show you the product against your actual workflow than send a brochure. Tell us a bit about your setup and we'll come back the same working day.
+        Interested in one of our products, or something built for you? Tell us a bit about how you work and we'll come back to you.
       </p>
     </div>
   </section>
@@ -18,41 +18,43 @@ import Icon from '../components/product/Icon.astro';
     <div class="container">
       <div class="form-grid">
         <div>
-          <form id="contact-form">
+          <form id="contact-form" novalidate>
             <div class="form-row">
               <div class="form-field">
                 <label>Your name <span class="req">*</span></label>
-                <input type="text" required placeholder="Jane Smith" />
+                <input type="text" name="name" required maxlength="120" autocomplete="name" placeholder="Jane Smith" />
               </div>
               <div class="form-field">
                 <label>Company <span class="req">*</span></label>
-                <input type="text" required placeholder="Acme Ltd" />
+                <input type="text" name="company" required maxlength="120" autocomplete="organization" placeholder="Acme Ltd" />
               </div>
             </div>
             <div class="form-row">
               <div class="form-field">
                 <label>Work email <span class="req">*</span></label>
-                <input type="email" required placeholder="jane@acme.co.uk" />
+                <input type="email" name="email" required maxlength="254" autocomplete="email" placeholder="jane@acme.co.uk" />
               </div>
               <div class="form-field">
                 <label>Phone <span style="color:var(--text-muted); font-weight:400; text-transform:none; letter-spacing:0;">(optional)</span></label>
-                <input type="tel" placeholder="+44 20 1234 5678" />
+                <input type="tel" name="phone" maxlength="30" autocomplete="tel" placeholder="+44 20 1234 5678" />
               </div>
             </div>
             <div class="form-row">
               <div class="form-field">
-                <label>Active suppliers</label>
-                <select>
-                  <option value="" disabled selected>Roughly how many?</option>
-                  <option>1–3 suppliers</option>
-                  <option>4–10 suppliers</option>
-                  <option>10+ suppliers</option>
+                <label>Interested in</label>
+                <select name="interest" id="interest">
+                  <option value="" disabled selected>Choose one</option>
+                  <option value="ordering">Intendant Ordering</option>
+                  <option value="site-safety">Intendant Site Safety</option>
+                  <option value="dashboards">Intendant Dashboards</option>
+                  <option value="custom">Custom software</option>
+                  <option value="not-sure">Not sure yet</option>
                 </select>
               </div>
               <div class="form-field">
-                <label>Team size</label>
-                <select>
-                  <option value="" disabled selected>Headcount placing orders</option>
+                <label>Company size</label>
+                <select name="teamSize">
+                  <option value="" disabled selected>Number of staff</option>
                   <option>1–10</option>
                   <option>10–50</option>
                   <option>50–200</option>
@@ -61,12 +63,16 @@ import Icon from '../components/product/Icon.astro';
               </div>
             </div>
             <div class="form-field">
-              <label>What's the most painful bit right now?</label>
-              <textarea placeholder="Where do orders live today? Which step costs you the most time? Anything specific about your suppliers or jobs we should know?"></textarea>
+              <label>What are you trying to fix? <span class="req">*</span></label>
+              <textarea name="message" required maxlength="2000" placeholder="How does it work today? Which step costs you the most time? Anything we should know before we talk?"></textarea>
             </div>
-            <button type="submit" class="btn btn-secondary" style="margin-top:8px;">Send message</button>
+            <div class="hp-field" aria-hidden="true">
+              <label>Leave this empty <input type="text" name="website" tabindex="-1" autocomplete="off" /></label>
+            </div>
+            <button type="submit" id="contact-submit" class="btn btn-secondary" style="margin-top:8px;">Send message</button>
+            <p id="contact-error" class="form-error" role="alert" hidden></p>
             <p style="font-size:12px; color:var(--text-muted); margin-top:16px;">
-              We reply within one working day. No mailing list, no drip sequence.
+              No mailing list, no drip sequence. See our <a href="/privacy" style="color:var(--mw-500); text-decoration:underline;">privacy notice</a>.
             </p>
           </form>
           <div id="contact-sent" style="display:none; padding:40px 0;">
@@ -74,14 +80,14 @@ import Icon from '../components/product/Icon.astro';
               <Icon name="check" size={28} color="var(--mw-500)" strokeWidth={2.5} />
             </div>
             <h2 style="font-family:var(--font-display); font-weight:700; font-size:32px; text-transform:uppercase; color:var(--mw-500); margin:0 0 10px;">Message sent.</h2>
-            <p style="color:var(--text-secondary); font-size:16px;">We'll come back to you the same working day.</p>
+            <p style="color:var(--text-secondary); font-size:16px;">Thanks. We'll be in touch soon.</p>
           </div>
         </div>
 
         <aside class="contact-side">
           <h4>How we usually start</h4>
           <p style="color:var(--text-secondary); font-size:14px; margin:0 0 18px;">
-            A 30-minute call where we walk through Intendant using your real supplier list and one of your active jobs. No slide decks.
+            A short call about how your team works today. If one of our products fits, we show you it with your own examples. If it doesn't, we talk about building something that does.
           </p>
           <div class="item">
             <div class="item-icon"><Icon name="mail" size={14} /></div>
@@ -91,24 +97,10 @@ import Icon from '../components/product/Icon.astro';
             </div>
           </div>
           <div class="item">
-            <div class="item-icon"><Icon name="clock" size={14} /></div>
-            <div>
-              <div class="lbl">Response time</div>
-              <div class="val">Within one working day</div>
-            </div>
-          </div>
-          <div class="item">
             <div class="item-icon"><Icon name="grid" size={14} /></div>
             <div>
-              <div class="lbl">Where we are</div>
-              <div class="val">London · Glasgow · UK-only data hosting</div>
-            </div>
-          </div>
-          <div class="item">
-            <div class="item-icon"><Icon name="user" size={14} /></div>
-            <div>
-              <div class="lbl">Who you'll speak to</div>
-              <div class="val">A founder, not a sales rep</div>
+              <div class="lbl">Data hosting</div>
+              <div class="val">EU</div>
             </div>
           </div>
         </aside>
@@ -120,9 +112,50 @@ import Icon from '../components/product/Icon.astro';
 <script>
   const form = document.getElementById('contact-form') as HTMLFormElement | null;
   const sent = document.getElementById('contact-sent');
-  form?.addEventListener('submit', (e) => {
+  const submit = document.getElementById('contact-submit') as HTMLButtonElement | null;
+  const errorEl = document.getElementById('contact-error');
+
+  const interest = new URLSearchParams(window.location.search).get('interest');
+  const interestSelect = document.getElementById('interest') as HTMLSelectElement | null;
+  if (interest && interestSelect && [...interestSelect.options].some((o) => o.value === interest)) {
+    interestSelect.value = interest;
+  }
+
+  const showError = (msg: string) => {
+    if (!errorEl) return;
+    errorEl.textContent = msg;
+    errorEl.hidden = false;
+  };
+
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
-    form.style.display = 'none';
-    if (sent) sent.style.display = 'block';
+    if (errorEl) errorEl.hidden = true;
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+
+    const payload = Object.fromEntries(new FormData(form).entries());
+    if (submit) {
+      submit.disabled = true;
+      submit.textContent = 'Sending…';
+    }
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error(`status ${res.status}`);
+      form.style.display = 'none';
+      if (sent) sent.style.display = 'block';
+    } catch {
+      showError("Sorry — that didn't send. Please try again, or email info@intendant.uk directly.");
+      if (submit) {
+        submit.disabled = false;
+        submit.textContent = 'Send message';
+      }
+    }
   });
 </script>

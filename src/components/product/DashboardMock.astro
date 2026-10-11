@@ -1,0 +1,62 @@
+---
+interface Props {
+  height?: number;
+}
+const { height = 480 } = Astro.props;
+
+const months = ['Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep'];
+const revenue = [62, 68, 71, 66, 78, 84];
+const margin = [18, 21, 19, 17, 22, 24];
+const max = Math.max(...revenue);
+const sites = [
+  { name: 'Riverside', val: '£41.2k', delta: '+8%', up: true },
+  { name: 'High Street', val: '£28.9k', delta: '+3%', up: true },
+  { name: 'Station Road', val: '£14.1k', delta: '−5%', up: false },
+];
+---
+
+<div class="pf dash" style={`height:${height}px;`}>
+  <div class="pf-toolbar">
+    <span class="firm-badge">HB</span>
+    <span class="title">Harbour Bakeries</span>
+    <span class="meta">· Prepared by Bramley &amp; Co</span>
+    <span class="meta" style="margin-left:auto;">September 2026</span>
+  </div>
+  <div style="flex:1; padding:14px; display:flex; flex-direction:column; gap:10px; overflow:hidden;">
+    <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:10px;">
+      <div class="p-card"><div class="h">Revenue</div><div class="big">£84.2k</div><div class="up">↑ 7.7% vs Aug</div></div>
+      <div class="p-card"><div class="h">Gross margin</div><div class="big">61.4%</div><div class="up">↑ 1.2 pts</div></div>
+      <div class="p-card"><div class="h">Net profit</div><div class="big">£20.1k</div><div class="up">↑ 24%</div></div>
+    </div>
+    <div style="display:grid; grid-template-columns:1.5fr 1fr; gap:10px; flex:1; min-height:0;">
+      <div class="p-card">
+        <div class="h">Revenue &amp; net profit · 6 months</div>
+        <div style="flex:1; display:flex; align-items:flex-end; gap:10px; min-height:110px;">
+          {revenue.map((v, i) => (
+            <div style="flex:1; height:100%; display:flex; flex-direction:column; justify-content:flex-end; align-items:center; gap:4px;">
+              <div style="width:100%; display:flex; align-items:flex-end; gap:2px; height:100%;">
+                <div style={`flex:1; height:${(v / max) * 100}%; background:${i === revenue.length - 1 ? '#0E7490' : '#A5D8E6'}; border-radius:3px;`}></div>
+                <div style={`flex:1; height:${(margin[i] / max) * 100}%; background:#C8A96E; border-radius:3px;`}></div>
+              </div>
+              <span style="font-size:9px; color:var(--text-muted); font-family:var(--font-mono);">{months[i]}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div class="p-card">
+        <div class="h">By site</div>
+        {sites.map((s) => (
+          <div class="site-row">
+            <span>{s.name}</span>
+            <span class="mono">{s.val}</span>
+            <span class={s.up ? 'up' : 'down'}>{s.delta}</span>
+          </div>
+        ))}
+        <div class="commentary">
+          <div class="h" style="margin-bottom:4px;">Accountant's note</div>
+          Station Road dipped on lower footfall; costs held. Worth reviewing opening hours before Q4.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

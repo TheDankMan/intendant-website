@@ -1,0 +1,78 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+
+const steps = [
+  { n: '01', title: 'Understand', body: 'We sit with the people who do the work and map how it really runs today: the forms, the spreadsheets and the workarounds.' },
+  { n: '02', title: 'Prototype', body: 'A clickable prototype on desktop and phone, so you can try the workflow before anything is built.' },
+  { n: '03', title: 'Build', body: 'Built in stages on the same foundations as our products, so you get proven parts rather than a blank page.' },
+  { n: '04', title: 'Run', body: 'We host, support and keep improving it. You deal with the people who built it.' },
+];
+
+const blocks = [
+  { title: 'Orders & approvals', body: 'Purchase orders, approval chains, spend limits, supplier records.' },
+  { title: 'Forms & evidence', body: 'Offline forms, photos, signatures, sealed PDF records.' },
+  { title: 'Time & people', body: 'Timesheets, approvals, rates, worker records.' },
+  { title: 'Reporting', body: 'Dashboards, monthly packs, exports, Xero data.' },
+  { title: 'Access', body: 'Roles, client logins, Microsoft sign-in, audit trails.' },
+  { title: 'Documents & email', body: 'Generated PDFs, branded notifications, mailbox integrations.' },
+];
+---
+
+<BaseLayout title="Custom software — Intendant" description="When an off-the-shelf product doesn't fit, we build operations software around how your business actually works.">
+  <section class="page-hero">
+    <div class="container">
+      <div class="eyebrow muted">Custom software</div>
+      <h1>Built around how you actually work.</h1>
+      <p class="lede">
+        When an off-the-shelf product doesn't fit, we build one that does. The same building blocks as our products, shaped to your process rather than the other way round.
+      </p>
+    </div>
+  </section>
+
+  <section class="section section-dark">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow accent">How we work</span>
+        <h2 class="h-display light">Four steps, no surprises.</h2>
+      </div>
+      <div class="process">
+        {steps.map((s) => (
+          <div>
+            <div class="n">{s.n}</div>
+            <h4>{s.title}</h4>
+            <p>{s.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow accent">What we start from</span>
+        <h2>Proven parts, not a blank page.</h2>
+        <p class="lede">Every build reuses components already running in our products, which is quicker for you and less risky.</p>
+      </div>
+      <div class="grid-features">
+        {blocks.map((b, i) => (
+          <div class="gf-cell">
+            <div class="num">0{i + 1}</div>
+            <h4>{b.title}</h4>
+            <p>{b.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    heading="Tell us what's not working."
+    sub="Describe the process that's held together with spreadsheets, and we'll tell you honestly whether software will help."
+    primaryHref="/contact?interest=custom"
+    primaryLabel="Start a conversation"
+    secondaryHref="/"
+    secondaryLabel="Our products"
+  />
+</BaseLayout>

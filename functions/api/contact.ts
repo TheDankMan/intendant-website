@@ -8,11 +8,18 @@ interface ContactBody {
   email?: unknown;
   phone?: unknown;
   message?: unknown;
+  interest?: unknown;
+  teamSize?: unknown;
+  website?: unknown;
 }
 
 function clean(v: unknown, max = 500): string {
   if (typeof v !== 'string') return '';
   return v.replace(/[\x00-\x08\x0b\x0c\x0e-\x1f]/g, '').trim().slice(0, max);
+}
+
+function escapeHtml(v: string): string {
+  return v.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
 }
 
 function isValidEmail(email: string): boolean {
@@ -38,11 +45,18 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return new Response(JSON.stringify({ error: 'invalid_json' }), { status: 400, headers: corsHeaders });
   }
 
+  // Honeypot: real visitors never see the `website` field. Answer as if sent so bots learn nothing.
+  if (clean(body.website, 200)) {
+    return new Response(JSON.stringify({ ok: true }), { status: 200, headers: corsHeaders });
+  }
+
   const name    = clean(body.name, 120);
   const company = clean(body.company, 120);
   const email   = clean(body.email, 254);
   const phone   = clean(body.phone, 30);
   const message = clean(body.message, 2000);
+  const interest  = clean(body.interest, 40);
+  const teamSize  = clean(body.teamSize, 40);
 
   if (!name || !company || !email || !message) {
     return new Response(JSON.stringify({ error: 'missing_fields' }), { status: 400, headers: corsHeaders });
@@ -51,30 +65,39 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return new Response(JSON.stringify({ error: 'invalid_email' }), { status: 400, headers: corsHeaders });
   }
 
+  const e = escapeHtml;
   const html = `
-    <p><strong>Name:</strong> ${name}</p>
-    <p><strong>Company:</strong> ${company}</p>
-    <p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p>
-    ${phone ? `<p><strong>Phone:</strong> ${phone}</p>` : ''}
+    <p><strong>Name:</strong> ${e(name)}</p>
+    <p><strong>Company:</strong> ${e(company)}</p>
+    <p><strong>Email:</strong> <a href="mailto:${e(email)}">${e(email)}</a></p>
+    ${phone ? `<p><strong>Phone:</strong> ${e(phone)}</p>` : ''}
+    ${interest ? `<p><strong>Interested in:</strong> ${e(interest)}</p>` : ''}
+    ${teamSize ? `<p><strong>Company size:</strong> ${e(teamSize)}</p>` : ''}
     <hr />
     <p><strong>Message:</strong></p>
-    <p style="white-space:pre-wrap">${message}</p>
+    <p style="white-space:pre-wrap">${e(message)}</p>
   `;
 
-  const resendRes = await fetch('https://api.resend.com/emails', {
-    method: 'POST',
-    headers: {
-      'Authorization': `Bearer ${key}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      from: 'Intendant Contact <noreply@intendant.uk>',
-      to: ['info@intendant.uk'],
-      reply_to: email,
-      subject: `New enquiry from ${name} — ${company}`,
-      html,
-    }),
-  });
+  let resendRes: Response;
+  try {
+    resendRes = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${key}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        from: 'Intendant Contact <noreply@intendant.uk>',
+        to: ['info@intendant.uk'],
+        reply_to: email,
+        subject: `New enquiry${interest ? ` (${interest})` : ''} from ${name} — ${company}`,
+        html,
+      }),
+    });
+  } catch (err) {
+    console.error(JSON.stringify({ level: 'error', event: 'contact_resend_unreachable', detail: String(err).slice(0, 300) }));
+    return new Response(JSON.stringify({ error: 'mail_send_failed' }), { status: 502, headers: corsHeaders });
+  }
 
   if (!resendRes.ok) {
     const err = await resendRes.text();

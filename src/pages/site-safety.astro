@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import SafetyFormMock from '../components/product/SafetyFormMock.astro';
+import DrawingPinMock from '../components/product/DrawingPinMock.astro';
+
+const features = [
+  { n: '01', title: 'Your forms, digitised', body: 'Inspections, permits, briefings and checklists rebuilt from your paper forms in a form builder. Change a form without a developer.' },
+  { n: '02', title: 'Works offline', body: 'Built for Wi-Fi-only tablets. Drafts save on the device and sync when it reconnects. Nothing typed on site is lost.' },
+  { n: '03', title: 'Photos & signatures', body: 'Photo evidence and on-screen signatures captured in the form, stored against the record.' },
+  { n: '04', title: 'Drawings & inspection points', body: 'Pin inspection points onto PDF drawings. Each pin carries its status, photos and history.' },
+  { n: '05', title: 'NCRs & incidents', body: 'Raise non-conformances and incidents from site, assign actions and track them to close.' },
+  { n: '06', title: 'Registers', body: 'Plant and equipment inspections, COSHH, lifting equipment and training records in one place.' },
+  { n: '07', title: 'Briefings & toolbox talks', body: 'Run daily briefings and toolbox talks with sign-on from the operatives who attended.' },
+  { n: '08', title: 'Sealed PDF records', body: 'Closed records are sealed as PDFs and bundled into weekly packs, ready for the client or an auditor.' },
+  { n: '09', title: 'Roles & audit trail', body: 'Operatives, supervisors, site managers and HSQE managers each see what they need. Every change is logged.' },
+];
+---
+
+<BaseLayout title="Intendant Site Safety — HSQE forms that work offline" description="Site safety and quality forms, inspections, drawings and registers for construction teams. Built for tablets that are offline most of the day.">
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow accent">Intendant Site Safety</div>
+          <h1>
+            Paperwork done<br />
+            on site.<br />
+            <span class="accent">Even offline.</span>
+          </h1>
+          <p class="lede light">
+            Health, safety, quality and environment forms for construction teams. Inspections, permits, briefings, NCRs and drawings on a tablet, built to keep working when the signal doesn't.
+          </p>
+          <div style="display:flex; gap:12px; margin-top:28px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="/contact?interest=site-safety">Book a walkthrough</a>
+            <a class="btn btn-ghost" href="#features">What's included →</a>
+          </div>
+        </div>
+        <div style="position:relative;">
+          <div class="product-frame">
+            <div class="inner"><SafetyFormMock /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow accent">Why it's different</span>
+        <h2>Designed for the site, not the office.</h2>
+        <p class="lede">
+          Most HSQE apps assume a signal. Site tablets usually don't have one. Intendant Site Safety treats offline as normal: forms open, save and queue on the device, then sync when it gets back to the cabin Wi-Fi.
+        </p>
+      </div>
+
+      <div class="feature-row">
+        <div class="feature-text">
+          <div class="step-num">01 / FORMS</div>
+          <h3>Fill it in once, on site.</h3>
+          <p>Your existing forms, rebuilt as tablet forms with yes/no checks, photos, signatures and actions. Failed checks raise an action straight away.</p>
+          <ul>
+            <li>Drafts saved on the device as you type</li>
+            <li>Sign-off by supervisor or site manager</li>
+            <li>Sent back with comments when something's missing</li>
+            <li>Form builder for your HSQE team</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="shot"><div class="inner"><SafetyFormMock /></div></div>
+          <div class="shot-caption"><span class="mono">Daily excavation inspection · offline draft</span></div>
+        </div>
+      </div>
+
+      <div class="feature-row reverse">
+        <div class="feature-text">
+          <div class="step-num">02 / QUALITY</div>
+          <h3>Inspections pinned to the drawing.</h3>
+          <p>Upload the drawing, drop inspection points on it, and inspect against them. Pass, fail or open is visible at a glance, and a failure can raise an NCR with the photo attached.</p>
+          <ul>
+            <li>PDF drawings with revisions</li>
+            <li>Inspection and test plans</li>
+            <li>NCRs linked to the point that failed</li>
+            <li>Photo history on every point</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="shot"><div class="inner"><DrawingPinMock /></div></div>
+          <div class="shot-caption"><span class="mono">Drawing · inspection points</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-canvas" id="features">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">What's included</span>
+        <h2>The whole HSQE file, in one system.</h2>
+      </div>
+      <div class="grid-features">
+        {features.map((f) => (
+          <div class="gf-cell">
+            <div class="num">{f.n}</div>
+            <h4>{f.title}</h4>
+            <p>{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    heading="Bring one of your forms."
+    sub="Send us a paper form you fill in every week, and we'll show you it running on a tablet."
+    primaryHref="/contact?interest=site-safety"
+    secondaryHref="/"
+    secondaryLabel="All products"
+  />
+</BaseLayout>

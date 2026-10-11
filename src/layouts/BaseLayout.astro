@@ -11,7 +11,7 @@ interface Props {
 
 const {
   title,
-  description = 'Intendant is a procurement portal for teams that buy from multiple suppliers. Order by job, track deliveries, match invoices — without the spreadsheets.',
+  description = 'Intendant builds operations software for businesses that run on site: procurement, site safety and client reporting, as products or built around how you work.',
   ogImage = '/og-default.png',
 } = Astro.props;
 
@@ -44,13 +44,12 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     {currentPath === '/' && (
       <script type="application/ld+json" set:html={JSON.stringify({
         '@context': 'https://schema.org',
-        '@type': 'SoftwareApplication',
+        '@type': 'Organization',
         name: 'Intendant',
+        legalName: 'TVET Training Systems UK Ltd',
         url: 'https://intendant.uk',
-        applicationCategory: 'BusinessApplication',
-        description: 'Procurement portal for teams that buy from multiple suppliers.',
-        operatingSystem: 'Web',
-        offers: { '@type': 'Offer', price: '0', priceCurrency: 'GBP' },
+        email: 'info@intendant.uk',
+        description: 'Operations software for businesses that run on site.',
       })} />
     )}
   </head>

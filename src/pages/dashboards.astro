@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import DashboardMock from '../components/product/DashboardMock.astro';
+
+const features = [
+  { n: '01', title: 'From Xero exports', body: 'Upload the monthly exports you already produce. The figures are read into each client\'s dashboard without retyping.' },
+  { n: '02', title: 'A login per client', body: 'Each client sees only their own business. Firm staff see every client they look after.' },
+  { n: '03', title: 'Your firm\'s branding', body: 'Your name and colours on every dashboard and pack, not ours.' },
+  { n: '04', title: 'Sites and groups', body: 'Break a client down by site or location, or roll several entities up into a group view.' },
+  { n: '05', title: 'Monthly packs', body: 'Build the month-end pack once and reuse the layout, with forecasts alongside actuals.' },
+  { n: '06', title: 'Commentary you approve', body: 'Optional AI-drafted commentary. Nothing reaches a client until someone at your firm has reviewed it.' },
+];
+---
+
+<BaseLayout title="Intendant Dashboards — client reporting for accountancy firms" description="Branded performance dashboards and monthly packs for your clients, built from the Xero exports you already produce.">
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow accent">Intendant Dashboards</div>
+          <h1>
+            Month-end packs<br />
+            your clients<br />
+            <span class="accent">actually open.</span>
+          </h1>
+          <p class="lede light">
+            A client reporting portal for accountancy firms. Upload your Xero exports, and each client gets a branded dashboard and a monthly pack with your commentary.
+          </p>
+          <div style="display:flex; gap:12px; margin-top:28px; flex-wrap:wrap;">
+            <a class="btn btn-primary" href="/contact?interest=dashboards">Book a walkthrough</a>
+            <a class="btn btn-ghost" href="#features">What's included →</a>
+          </div>
+        </div>
+        <div style="position:relative;">
+          <div class="product-frame">
+            <div class="inner"><DashboardMock /></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="feature-row">
+        <div class="feature-text">
+          <div class="step-num">THE PROBLEM</div>
+          <h3>The spreadsheet pack nobody reads.</h3>
+          <p>Every month someone at the firm rebuilds the same charts, pastes them into a PDF and emails it out. Clients skim it, then ring with the questions it already answers.</p>
+          <ul>
+            <li>Figures come from the exports you already run</li>
+            <li>Clients log in to the current month, any time</li>
+            <li>Site-by-site breakdowns without extra work</li>
+            <li>Your commentary sits next to the numbers</li>
+          </ul>
+        </div>
+        <div class="feature-visual">
+          <div class="shot"><div class="inner"><DashboardMock /></div></div>
+          <div class="shot-caption"><span class="mono">Client dashboard · illustrative data</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-canvas" id="features">
+    <div class="container">
+      <div class="section-head">
+        <span class="eyebrow">What's included</span>
+        <h2>Built for the firm. Read by the client.</h2>
+      </div>
+      <div class="grid-features">
+        {features.map((f) => (
+          <div class="gf-cell">
+            <div class="num">{f.n}</div>
+            <h4>{f.title}</h4>
+            <p>{f.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    heading="See it with one of your clients."
+    sub="Send us last month's exports for one client, and we'll show you their dashboard."
+    primaryHref="/contact?interest=dashboards"
+    secondaryHref="/"
+    secondaryLabel="All products"
+  />
+</BaseLayout>
