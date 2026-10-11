@@ -1,0 +1,57 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  height?: number;
+}
+const { height = 480 } = Astro.props;
+
+const checks = [
+  { q: 'Permit issued and displayed', a: 'Yes' },
+  { q: 'Services traced and marked (CAT & Genny)', a: 'Yes' },
+  { q: 'Excavation edge protection in place', a: 'No' },
+  { q: 'Spoil stored 1m back from edge', a: 'Yes' },
+];
+---
+
+<div class="pf safety" style={`height:${height}px;`}>
+  <div class="pf-toolbar">
+    <span class="title">Daily excavation inspection</span>
+    <span class="meta">· J-204 Northfield Yard</span>
+    <span class="sync-pill" style="margin-left:auto;"><Icon name="clock" size={11} /> Saved offline · syncs on Wi-Fi</span>
+  </div>
+  <div style="flex:1; padding:14px; display:flex; flex-direction:column; gap:10px; overflow:hidden;">
+    <div class="p-card">
+      <div class="h">Checks</div>
+      {checks.map((c) => (
+        <div class="check-row">
+          <span>{c.q}</span>
+          <span class="seg">
+            <span class={c.a === 'Yes' ? 'on yes' : ''}>Yes</span>
+            <span class={c.a === 'No' ? 'on no' : ''}>No</span>
+            <span>N/A</span>
+          </span>
+        </div>
+      ))}
+      <div class="action-note"><Icon name="warn" size={12} /> Action raised: install edge barriers before work starts</div>
+    </div>
+    <div style="display:grid; grid-template-columns:1.3fr 1fr; gap:10px;">
+      <div class="p-card">
+        <div class="h">Photos · 3</div>
+        <div style="display:flex; gap:6px;">
+          <span class="thumb"></span><span class="thumb t2"></span><span class="thumb t3"></span>
+        </div>
+      </div>
+      <div class="p-card">
+        <div class="h">Supervisor signature</div>
+        <svg viewBox="0 0 160 40" style="height:34px; width:100%;" fill="none" stroke="#1E3A5F" stroke-width="2" stroke-linecap="round">
+          <path d="M6 28c10-18 18-20 20-8s6 14 14-2 12-12 14 0 10 10 20-6 14-6 18 4 16 8 30-6" />
+        </svg>
+      </div>
+    </div>
+    <div style="display:flex; gap:8px; justify-content:flex-end;">
+      <button type="button" class="p-btn secondary">Save draft</button>
+      <button type="button" class="p-btn theme">Submit for sign-off</button>
+    </div>
+  </div>
+</div>

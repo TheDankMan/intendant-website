@@ -5,9 +5,10 @@ interface Props {
 const { currentPath } = Astro.props;
 
 const links = [
-  { id: 'how', label: 'How it works', href: '/how-it-works' },
-  { id: 'pricing', label: 'Pricing', href: '/pricing' },
-  { id: 'contact', label: 'Contact', href: '/contact' },
+  { id: 'ordering', label: 'Ordering', href: '/ordering' },
+  { id: 'safety', label: 'Site Safety', href: '/site-safety' },
+  { id: 'dashboards', label: 'Dashboards', href: '/dashboards' },
+  { id: 'custom', label: 'Custom software', href: '/custom-software' },
 ];
 
 const isActive = (href: string) =>
@@ -22,7 +23,7 @@ const isActive = (href: string) =>
       {links.map((l) => (
         <a href={l.href} class={isActive(l.href) ? 'active' : ''}>{l.label}</a>
       ))}
-      <a href="/contact" class="btn btn-primary nav-cta">Book a walkthrough</a>
+      <a href="/contact" class="btn btn-primary nav-cta">Get in touch</a>
     </nav>
 
     <button class="nav-burger" id="nav-burger" aria-label="Menu" aria-expanded="false">
@@ -37,7 +38,7 @@ const isActive = (href: string) =>
       {links.map((l) => (
         <a href={l.href} class={isActive(l.href) ? 'active' : ''}>{l.label}</a>
       ))}
-      <a href="/contact" class="btn btn-primary">Book a walkthrough</a>
+      <a href="/contact" class="btn btn-primary">Get in touch</a>
     </nav>
   </div>
 </header>

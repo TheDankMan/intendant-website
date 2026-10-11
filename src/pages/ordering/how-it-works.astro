@@ -1,12 +1,12 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import CtaBand from '../components/CtaBand.astro';
-import Icon from '../components/product/Icon.astro';
-import CatalogueScreen from '../components/product/CatalogueScreen.astro';
-import BasketDrawerMock from '../components/product/BasketDrawerMock.astro';
-import HistoryScreen from '../components/product/HistoryScreen.astro';
-import DeliveryDocketMock from '../components/product/DeliveryDocketMock.astro';
-import InvoiceMatchMock from '../components/product/InvoiceMatchMock.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import Icon from '../../components/product/Icon.astro';
+import CatalogueScreen from '../../components/product/CatalogueScreen.astro';
+import BasketDrawerMock from '../../components/product/BasketDrawerMock.astro';
+import HistoryScreen from '../../components/product/HistoryScreen.astro';
+import DeliveryDocketMock from '../../components/product/DeliveryDocketMock.astro';
+import InvoiceMatchMock from '../../components/product/InvoiceMatchMock.astro';
 
 const rail = [
   'Set up suppliers & catalogue',
@@ -56,7 +56,7 @@ const steps = [
   {
     n: '04',
     title: 'Deliveries arrive — dockets captured on arrival',
-    body: 'The driver or site contact uploads a delivery docket photo from their phone. The system reads quantities off the docket and links them to the originating order.',
+    body: 'The driver or site contact uploads a delivery docket photo from their phone. The docket is linked to the originating order, and received quantities are recorded against each line.',
     bullets: [
       'Photo upload from any phone',
       'Auto-link to the original order by reference',
@@ -73,7 +73,7 @@ const steps = [
       'Three-way line match: PO ↔ docket ↔ invoice',
       'Price drift checked against agreed price book',
       'Flagged invoices held for review, not paid',
-      'Approved matches push to your accounts tool',
+      'Approved invoices push to Xero',
     ],
     caption: 'Invoice reconciliation',
   },
@@ -83,17 +83,17 @@ const roles = [
   { tag: 'ROLE 01', title: 'Site managers', desc: 'Place orders against assigned jobs. Track open deliveries.', list: ['Catalogue search', 'Order basket', 'Own order history', 'PoD uploads'] },
   { tag: 'ROLE 02', title: 'Buyers', desc: 'Full order visibility. Manage suppliers, catalogue, and price books.', list: ['All open POs', 'Catalogue manager', 'Supplier price books', 'User access'] },
   { tag: 'ROLE 03', title: 'Accounts', desc: 'Match invoices, reconcile deliveries, produce spend reports.', list: ['Invoice match', 'Delivery dockets', 'Spend reports', 'CSV export'] },
-  { tag: 'ROLE 04', title: 'Admins', desc: 'Org-wide settings, integrations, audit logs, retention policies.', list: ['User & role admin', 'Accounting integration', 'Audit log', 'Data retention'] },
+  { tag: 'ROLE 04', title: 'Admins', desc: 'Org-wide settings, integrations, audit logs, retention policies.', list: ['User & role admin', 'Xero integration', 'Audit log', 'Data retention'] },
 ];
 ---
 
-<BaseLayout title="How it works — Intendant">
+<BaseLayout title="How Intendant Ordering works" description="The procurement loop in five steps: catalogue, order by job, structured POs, proof of delivery and three-way invoice match.">
   <section class="page-hero">
     <div class="container">
-      <div class="eyebrow muted">How it works</div>
+      <div class="eyebrow muted">Intendant Ordering · How it works</div>
       <h1>Catalogue → Order → Delivery → Match</h1>
       <p class="lede">
-        The procurement loop, in five steps. Set up takes a week. The daily workflow takes minutes.
+        The procurement loop, in five steps. We do the setup with you; the daily workflow takes minutes.
       </p>
     </div>
   </section>
@@ -110,11 +110,6 @@ const roles = [
             </li>
           ))}
         </ol>
-        <div style="margin-top:32px; padding:20px; background:var(--mw-500); color:#fff; border-radius:12px;">
-          <div class="eyebrow" style="color:var(--accent);">Typical setup time</div>
-          <div style="font-family:var(--font-display); font-weight:700; font-size:40px; line-height:1; margin:10px 0 4px; color:#fff;">5 days</div>
-          <p style="margin:0; font-size:13px; color:rgba(255,255,255,0.72);">From kick-off to first live order. We handle the supplier price-book imports.</p>
-        </div>
       </aside>
 
       <div class="step-rail">
@@ -183,6 +178,9 @@ const roles = [
   </section>
 
   <CtaBand
+    primaryHref="/contact?interest=ordering"
+    secondaryHref="/ordering"
+    secondaryLabel="Ordering overview"
     heading="Want to see your workflow in it?"
     sub="Send us your current process — phone, email, spreadsheet — and we'll show you the same thing in Intendant."
   />

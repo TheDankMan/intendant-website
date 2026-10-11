@@ -8,7 +8,7 @@ interface ContactBody {
   email?: unknown;
   phone?: unknown;
   message?: unknown;
-  suppliers?: unknown;
+  interest?: unknown;
   teamSize?: unknown;
   website?: unknown;
 }
@@ -55,7 +55,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const email   = clean(body.email, 254);
   const phone   = clean(body.phone, 30);
   const message = clean(body.message, 2000);
-  const suppliers = clean(body.suppliers, 40);
+  const interest  = clean(body.interest, 40);
   const teamSize  = clean(body.teamSize, 40);
 
   if (!name || !company || !email || !message) {
@@ -71,8 +71,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     <p><strong>Company:</strong> ${e(company)}</p>
     <p><strong>Email:</strong> <a href="mailto:${e(email)}">${e(email)}</a></p>
     ${phone ? `<p><strong>Phone:</strong> ${e(phone)}</p>` : ''}
-    ${suppliers ? `<p><strong>Active suppliers:</strong> ${e(suppliers)}</p>` : ''}
-    ${teamSize ? `<p><strong>Team size:</strong> ${e(teamSize)}</p>` : ''}
+    ${interest ? `<p><strong>Interested in:</strong> ${e(interest)}</p>` : ''}
+    ${teamSize ? `<p><strong>Company size:</strong> ${e(teamSize)}</p>` : ''}
     <hr />
     <p><strong>Message:</strong></p>
     <p style="white-space:pre-wrap">${e(message)}</p>
@@ -90,7 +90,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         from: 'Intendant Contact <noreply@intendant.uk>',
         to: ['info@intendant.uk'],
         reply_to: email,
-        subject: `New enquiry from ${name} — ${company}`,
+        subject: `New enquiry${interest ? ` (${interest})` : ''} from ${name} — ${company}`,
         html,
       }),
     });
